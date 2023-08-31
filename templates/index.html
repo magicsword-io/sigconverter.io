@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta tags -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <meta name="viewport" content="width=device-width" />
+
+  <!-- Favicon and title -->
+  <link rel="icon" href="{{ url_for('static', filename='fav.png') }}">
+  <title>sigconverter.io - sigma rule converter</title>
+  <!-- Add Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Semantic UI-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css" integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<!-- Prism CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-atom-dark.min.css" integrity="sha512-GZPS1oCebjx8g/ZkrTTvWirW+4wDkzIsilUQPXcZzuDpDzoH5brM2AojiFjo6ObIWeM68ZDostvdjaS9MNYCTg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.css" integrity="sha512-cbQXwDFK7lj2Fqfkuxbo5iD1dSbLlJGXGpfTDqbggqjHJeyzx88I3rfwjS38WJag/ihH7lzuGlGHpDBymLirZQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<!-- sigconverter.io css -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PR1SJ2WGE6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-PR1SJ2WGE6');
+  </script>
+
+
+</head>
+<body onload="showFormats(); showPipelines(); cli()" class="dark-mode">
+
+  <nav style="padding: 20px 3% 30px 3%;">
+    <div class="ui grid bottom aligned">
+      <div class="ten wide computer only tablet only column">
+        <h1>
+          <img src="{{ url_for('static', filename='images/lookatme.jpg') }}" alt="Logo" style="height:50px; width:50px; vertical-align:middle;">
+          <a href="/">sigconverter.io</a> - sigma rule converter
+        </h1>
+      </div>
+      <div class="ten wide mobile only column">
+        <h1>
+          <img src="{{ url_for('static', filename='images/lookatme.jpg') }}" alt="Logo" style="height:50px; width:50px; vertical-align:middle;">
+          <a href="/">sigconverter.io</a>
+        </h1>
+      </div>
+      
+      <div class="six wide column right aligned">
+        <h3>
+          <a href="https://github.com/magicsword-io/sigconverter.io" style="color: white;">
+            <i class="fab fa-github" style="font-size: 48px;"></i>
+          </a>
+        </h3>
+      </div>
+    </div>
+  </nav>
+
+  <div class="ui inverted two column grid vertically divided stackable">
+    <!-- Forms -->
+    <div class="row">
+      <div class="column">
+        <div class="ui form large">
+          <div class="ui stackable grid">
+          <div class="three fields">
+            <!-- Target Select -->
+            <div class="field">
+              <label>Select target:</label>
+              <select id="target-select" onchange="showFormats(); showPipelines(); convert(); cli()" class="ui selection dropdown">
+                {% for name, backend in backends.items() %}
+                <option value="{{ name }}">{{ name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <!-- Output Format Select -->
+            <div class="field">
+              <label>Select output format:</label>
+              <select id="format-select" onchange="convert(); cli()" class="ui selection dropdown">
+                {% for format in formats %}
+                <option hidden backend="{{ format.backend }}" value="{{ format.name }}">{{ format.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <!-- Pipeline Select -->
+            <div class="field">
+              <label>Select pipeline(s): </label>
+              <select id="pipeline-select" onchange="convert(); cli()" multiple="" class="ui selection dropdown">
+                <option value></option>
+                <option value=""></option>
+                {% for name, pipeline in pipelines %}
+                <option hidden value="{{ name }}" backend="{{ pipeline.backends }}">{{ name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="ui grid padded stackable">
+          <div class="ten wide column">
+             <pre style="margin: 0; margin-top: 5px;"><code id="cli-code" class="language-bash"></code></pre>
+          </div>
+          <div class="four wide column left floated">
+            <div style="margin-top: 10px;" class="ui buttons">
+              <button id="copy-button" onclick="copy()" class="ui button">Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>   
+    <!-- Code Input and Output -->
+    <div class="row">
+      <div class="column">
+        <pre><div id="input-textarea" class="line-numbers language-yml fill overflow-y-hidden">title: Suspicious SYSTEM User Process Creation
+id: 2617e7ed-adb7-40ba-b0f3-8f9945fe6c09
+status: test
+description: Detects a suspicious process creation as SYSTEM user (suspicious program or command line parameter)
+references:
+    - Internal Research
+    - https://tools.thehacker.recipes/mimikatz/modules
+author: Florian Roth (rule), David ANDRE (additional keywords)
+date: 2021/12/20
+modified: 2022/04/27
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        IntegrityLevel: System
+        User|contains: # covers many language settings
+            - 'AUTHORI'
+            - 'AUTORI'
+    selection_special:
+        - Image|endswith:
+            - '\calc.exe'
+            - '\wscript.exe'
+            - '\cscript.exe'
+            - '\hh.exe'
+            - '\mshta.exe'
+            - '\forfiles.exe'
+            - '\ping.exe'
+        - CommandLine|contains:
+            # - 'sc stop ' # stops a system service # causes FPs
+            - ' -NoP '  # Often used in malicious PowerShell commands
+            - ' -W Hidden '  # Often used in malicious PowerShell commands
+            - ' -decode '  # Used with certutil
+            - ' /decode '  # Used with certutil
+            - ' /urlcache '  # Used with certutil
+            - ' -urlcache '  # Used with certutil
+            - ' -e* JAB'  # PowerShell encoded commands
+            - ' -e* SUVYI'  # PowerShell encoded commands
+            - ' -e* SQBFAFgA'  # PowerShell encoded commands
+            - ' -e* aWV4I'  # PowerShell encoded commands
+            - ' -e* IAB'  # PowerShell ncoded commands
+            - ' -e* PAA'  # PowerShell encoded commands
+            - ' -e* aQBlAHgA'  # PowerShell encoded commands
+            - 'vssadmin delete shadows'  # Ransomware
+            - 'reg SAVE HKLM'  # save registry SAM - syskey extraction
+            - ' -ma '  # ProcDump
+            - 'Microsoft\Windows\CurrentVersion\Run'  # Run key in command line - often in combination with REG ADD
+            - '.downloadstring('  # PowerShell download command
+            - '.downloadfile('  # PowerShell download command
+            - ' /ticket:'  # Rubeus
+            - 'dpapi::'     #Mimikatz
+            - 'event::clear'        #Mimikatz
+            - 'event::drop'     #Mimikatz
+            - 'id::modify'      #Mimikatz
+            - 'kerberos::'       #Mimikatz
+            - 'lsadump::'      #Mimikatz
+            - 'misc::'     #Mimikatz
+            - 'privilege::'       #Mimikatz
+            - 'rpc::'      #Mimikatz
+            - 'sekurlsa::'       #Mimikatz
+            - 'sid::'        #Mimikatz
+            - 'token::'      #Mimikatz
+            - 'vault::cred'     #Mimikatz
+            - 'vault::list'     #Mimikatz
+            - ' p::d '  # Mimikatz
+            - ';iex('  # PowerShell IEX
+            - 'MiniDump'  # Process dumping method apart from procdump
+            - 'net user '
+    condition: all of selection*
+falsepositives:
+    - Administrative activity
+    - Scripts and administrative tools used in the monitored environment
+    - Monitoring activity
+level: high</div></pre>
+      </div>
+      <div class="column">
+         <pre><code id="result-code" class="line-numbers language-splunk-spl overflow-y-hidden fill">Output will be displayed here</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui compact message green notification-box hidden">
+      <i class="close icon"></i>
+      <div class="header">
+          Success!
+      </div>
+      <p>Check your clipboard ;)</p>
+  </div>
+
+  <div class="ui inverted black modal">
+    <i class="close icon"></i>
+    <div class="header">
+        requirements.txt
+    </div>
+    <div class="content">
+        <!-- {{ requirements }} -->
+        {% for line in requirements.split('\n') if line %}
+            <p>{{ line }}</p>
+        {% endfor %}
+    </div>
+  </div>
+ 
+
+	<!-- Semantic UI -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js" integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<!-- PrismJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js" integrity="sha512-RDQSW3KoqJMiX0L/UBgwBmH1EmRYp8LBOiLaA8rBHIy+7OGP/7Gxg8vbt8wG4ZYd29P0Fnoq6+LOytCqx3cyoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-yaml.min.js" integrity="sha512-6O/PZimM3TD1NN3yrazePA4AbZrPcwt1QCGJrVY7WoHDJROZFc9TlBvIKMe+QfqgcslW4lQeBzNJEJvIMC8WhA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-splunk-spl.min.js" integrity="sha512-RLhcqVEXOdbZPCJ8YG5fZDRIK3nXiS6erMtnzLyaKzS17H7mRi/9a1o+s2TM2XlWk4Nk7E579LyL63R7nUlrgQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-bash.min.js" integrity="sha512-ZqfG//sXQwAA7DOArFJyMmZQ3knKe+0ft3tPQZPvDPJR04IatmhVO5pTazVV+fLVDYSy28PhoBeUj5wxGRiGAA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<!-- sigconverter.io js -->
+  <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+  <script type="module">
+  import {CodeJar} from 'https://medv.io/codejar/codejar.js'
+  import {withLineNumbers} from 'https://medv.io/codejar/linenumbers.js'
+  window.jar = CodeJar(document.querySelector('#input-textarea'), el => Prism.highlightElement(el))
+  jar.onUpdate(code => {
+    if(code.length > 0) {
+      convert()
+    }
+  })
+  </script>
+  <script>
+    $(document)
+      .ready(function() {
+        $('.ui.selection.dropdown').dropdown();
+        $('.ui.menu .ui.dropdown').dropdown({
+          on: 'hover'
+        });
+      $('#target-select').dropdown('set selected', "splunk");
+      })
+    ;
+    $('.message .close, .ui.modal .close').on('click', function() {
+        $(this).closest('.message, .ui.modal').transition('fade');
+    });
+  </script>
+</body>
+</html>

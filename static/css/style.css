@@ -1,0 +1,128 @@
+/* Variables */
+:root {
+  --font: 'Roboto', sans-serif;
+  --bg: #1c1c1e;
+  --text: #ececec;
+  --bold-text: #2ebd52;
+  --accent: #007BFF;
+  --border-color: #19191b;
+  --light: #D3D3D3;
+}
+
+/* Font Import for Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+/* New Styles */
+body, html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 1rem;
+  font-kerning: normal;
+  -webkit-text-size-adjust: 100%;
+  font-size: 18px;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Updated existing styles */
+.dark-mode {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+/* Lighter background for code display */
+div[class*="language-"],
+code[class*="language-"],
+code[class*="language-"] *,
+pre[class*="language-"] {
+  background-color: #2d2d2f;  /* Lighter than the previous */
+  word-break: break-word !important;
+  white-space: pre-wrap !important;
+}
+
+div[class*="language-"]::selection,
+div[class*="language-"] span::selection,
+code[class*="language-"]::selection,
+code[class*="language-"] span::selection {
+  background: hsl(320, 80%, 25%);
+  color: hsla(0, 0%, 100%, .8);
+}
+
+.font-size-10 {
+  font-size: 1.0rem !important;
+}
+
+.row {
+  padding-left: 3% !important;
+  padding-right: 3% !important;
+}
+
+.dark-mode .ui.selection.dropdown,
+.dark-mode .ui.selection.dropdown:hover,
+.dark-mode .ui.selection.active.dropdown .menu,
+.dark-mode .ui.selection.active.dropdown:hover .menu,
+.dark-mode .ui.selection.active.visible.dropdown,
+.dark-mode .ui.selection.active.visible.dropdown:hover {
+  border-color: var(--light);
+}
+
+.dark-mode .ui.selection.dropdown, .dark-mode .ui.selection.active.dropdown > div.text {
+  color: var(--text);
+  background-color: rgba(255,255,255,.05);
+  border-color: var(--border-color);
+}
+
+.dark-mode .ui.selection.active.dropdown div.item {
+  color: var(--text);
+  background-color: #1d1f21;
+  border-color: var(--border-color);
+}
+
+.dark-mode .ui.form .field>label {
+  color: var(--text);
+}
+
+pre[class*=language-] {
+  min-height: 49px;
+  cursor: text;
+}
+
+.notification-box {
+  position: fixed !important;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: none;
+}
+
+.dark-mode .ui.modal>.header,
+.dark-mode .ui.modal>.content {
+  color: white;
+  background-color: var(--bg);
+}
+
+@media only screen and (max-width: 768px) {
+  .ui.selection.dropdown {
+    width: 100% !important;
+  }
+}
+
+/* Increase contrast for text boxes */
+.ui.selection.dropdown, .ui.selection.active.dropdown > div.text {
+  color: #ffffff;
+  background-color: #1c1c1e;
+  border-color: #2ebd52;
+}
+
+/* Add a minimum width to the cli-code box to prevent clashing */
+#cli-code {
+  min-width: 300px;
+}
+/* Add a minimum width to the dropdowns to prevent clashing */
+.field .ui.selection.dropdown {
+  min-width: 200px;
+}
