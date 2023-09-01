@@ -12,7 +12,7 @@ on: # yamllint disable-line rule:truthy
       - master
 
 jobs:
-  test-pip-pqckqges:
+  test-pip-package:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3.3.0
