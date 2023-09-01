@@ -24,5 +24,4 @@ jobs:
         python-version: 3.11
     - name: Test PIP pakcage installation
       run: |
-        pip install PyYAML colorama
         python -m pip install -r requirements.txt
