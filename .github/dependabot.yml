@@ -1,0 +1,27 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  - package-ecosystem: "pip" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "sigma-cli"
+      - dependency-name: "pysigma"
+      - dependency-name: "pysigma-backend-carbonblack"
+      - dependency-name: "pysigma-backend-cortexxdr"
+      - dependency-name: "pysigma-backend-elasticsearch"
+      - dependency-name: "pysigma-backend-opensearch"
+      - dependency-name: "pysigma-backend-qradar"
+      - dependency-name: "pysigma-backend-qradar-aql"
+      - dependency-name: "pysigma-backend-sentinelone"
+      - dependency-name: "pysigma-backend-sentinelone-pq"
+      - dependency-name: "pysigma-backend-splunk"
+      - dependency-name: "pysigma-backend-insightidr"
+      - dependency-name: "pysigma-pipeline-crowdstrike"
+      - dependency-name: "pysigma-pipeline-sysmon"
+      - dependency-name: "pysigma-pipeline-windows"
