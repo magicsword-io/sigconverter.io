@@ -10,7 +10,7 @@ pysigma-backend-qradar-aql==0.2.3
 pysigma-backend-sentinelone==0.1.2
 pysigma-backend-sentinelone-pq==0.1.1
 pysigma-backend-splunk==1.0.2
-pysigma-backend-insightidr==0.2.2
+#pysigma-backend-insightidr==0.2.2
 pysigma-pipeline-crowdstrike==1.0.0
 pysigma-pipeline-sysmon==1.0.2
 pysigma-pipeline-windows==1.1.0
