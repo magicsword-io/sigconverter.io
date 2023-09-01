@@ -48,6 +48,7 @@ We welcome contributions from the community. If you'd like to contribute, please
 - [Nasreddine Bencherchali](https://twitter.com/nas_bench)
 - [Kostas](https://twitter.com/Kostastsale)
 - [Michael Haag](https://twitter.com/M_haggis)
+- [Julian Ortel](https://twitter.com/m3nixx)
 
 ## 📝 Credits
 
