@@ -68,7 +68,8 @@ const convert = () => {
   let resultCode = document.getElementById('result-code');
 
   // get form values
-  let sigma = jar.toString()
+  let sigma = rulejar.toString()
+  let template = templatejar.toString()
   let pipeline = $('#pipeline-select').dropdown('get value');
   let target = $('#target-select').dropdown('get value');
   let format = $('#format-select').dropdown('get value');
@@ -77,6 +78,7 @@ const convert = () => {
   const params = {
     rule: btoa(sigma),
     pipeline: pipeline,
+    template: template,
     target: target,
     format: format
   };

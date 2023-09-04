@@ -10,9 +10,12 @@ from sigma.conversion.base import Backend
 from sigma.plugins import InstalledSigmaPlugins
 from sigma.collection import SigmaCollection
 from sigma.exceptions import SigmaError
+from sigma.processing import pipeline
+from sigma.processing.pipeline import ProcessingPipeline
 
 app = Flask(__name__)
 plugins = InstalledSigmaPlugins.autodiscover()
+pipeline_generic = pipeline.ProcessingPipeline()
 backends = plugins.backends
 pipeline_resolver = plugins.get_pipeline_resolver()
 pipelines = list(pipeline_resolver.list_pipelines()) 
@@ -48,14 +51,23 @@ def convert():
         return ("Error: No valid yaml input")
 
     pipeline = []
+    template_pipeline = ""
     if request.json['pipeline']:
         for p in request.json['pipeline']:
             pipeline.append(p)
+    if request.json['template']:
+        try:
+            template_pipeline = pipeline_generic.from_yaml(request.json['template'])
+        except:
+            pass
     target = request.json['target']
     format = request.json['format']
 
     backend_class = backends[target]
     processing_pipeline = pipeline_resolver.resolve(pipeline)
+
+    if isinstance(template_pipeline, ProcessingPipeline):
+        processing_pipeline += template_pipeline
     backend : Backend = backend_class(processing_pipeline=processing_pipeline)
 
     try:

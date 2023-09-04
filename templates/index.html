@@ -189,6 +189,7 @@ falsepositives:
     - Scripts and administrative tools used in the monitored environment
     - Monitoring activity
 level: high</div></pre>
+          <pre><div id="template-textarea" class="line-numbers language-yml fill overflow-y-hidden"></div></pre>
       </div>
       <div class="column">
          <pre><code id="result-code" class="line-numbers language-splunk-spl overflow-y-hidden fill">Output will be displayed here</code></pre>
@@ -231,8 +232,17 @@ level: high</div></pre>
   <script type="module">
   import {CodeJar} from 'https://medv.io/codejar/codejar.js'
   import {withLineNumbers} from 'https://medv.io/codejar/linenumbers.js'
-  window.jar = CodeJar(document.querySelector('#input-textarea'), el => Prism.highlightElement(el))
-  jar.onUpdate(code => {
+  
+  window.rulejar = CodeJar(document.querySelector('#input-textarea'), el => Prism.highlightElement(el))
+  window.templatejar = CodeJar(document.querySelector('#template-textarea'), el => Prism.highlightElement(el))
+
+  rulejar.onUpdate(code => {
+    if(code.length > 0) {
+      convert()
+    }
+  })
+
+  templatejar.onUpdate(code => {
     if(code.length > 0) {
       convert()
     }
