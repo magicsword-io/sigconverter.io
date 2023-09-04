@@ -1,7 +1,7 @@
 flask==2.3.3
 sigma-cli==0.7.7
 pysigma==0.10.5
-pysigma-backend-carbonblack==0.1.4
+#pysigma-backend-carbonblack==0.1.4
 pysigma-backend-cortexxdr==0.1.1
 pysigma-backend-elasticsearch==1.0.5
 pysigma-backend-opensearch==1.0.0
