@@ -1,0 +1,36 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  SERVICE_NAME: sigconverter
+  IMAGE_NAME: sigconverter.io
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v0.2.1
+      with:
+        project_id: ${{ secrets.PROJECT_ID }}
+        service_account_key: ${{ secrets.GCLOUD_AUTH }}
+
+    - name: Configure Docker
+      run: gcloud auth configure-docker
+
+    - name: Build Docker image
+      run: docker build -t ${{ env.IMAGE_NAME }} .
+
+    - name: Push Docker image to Google Container Registry
+      run: gcloud builds submit --tag gcr.io/${{ secrets.PROJECT_ID }}/${{ env.IMAGE_NAME }}
+
+    - name: Deploy to Google Cloud Run
+      run: gcloud run deploy ${{ env.SERVICE_NAME }} --image gcr.io/${{ secrets.PROJECT_ID }}/${{ env.IMAGE_NAME }} --platform managed
