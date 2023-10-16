@@ -1,103 +1,176 @@
-function copy() {
+// initialize select dropdowns
+new TomSelect("#select-backend", {
+  controlInput: null,
+  valueField: "value",
+  labelField: "label"
+});
+new TomSelect("#select-format", {
+  controlInput: null,
+  valueField: "value",
+  labelField: "label"
+});
+new TomSelect("#select-pipeline", {
+  allowEmptyOption: true,
+  plugins: ["remove_button", "checkbox_options"],
+  persist: false,
+  hidePlaceholder: true,
+  searchField: "value",
+  valueField: "value",
+  labelField: "label"
+});
 
-  let resultCode = document.getElementById('result-code');
-  navigator.clipboard.writeText(resultCode.value);
+// inital stuff todo when page is loaded
+window.onload = function () {
+  // select splunk backend by default
+  let backendSelect = document.getElementById("select-backend");
+  backendSelect.tomselect.addItem("splunk");
+  // init filtering of dropdowns on page load
+  filterFormatOptions();
+  filterPipelineOptions();
+  // load cli command
+  generateCli();
+  // inital conversion of example rule
+  convert(sigmaJar.toString());
+};
 
-  // alert("successfully copied")
-  $('.notification-box').transition('fade in'); // display the notification
+// define onchange handler for select dropdowns
+document.getElementById("select-backend").onchange = function () {
+  filterFormatOptions();
+  filterPipelineOptions();
+  generateCli();
+  convert(sigmaJar.toString());
+};
 
-  setTimeout(function(){
-      $('.notification-box').transition('fade out'); // hide the notification after 2 seconds
-  }, 2000);
+document.getElementById("select-format").onchange = function () {
+  generateCli();
+  convert(sigmaJar.toString());
+};
+
+document.getElementById("select-pipeline").onchange = function () {
+  generateCli();
+  convert(sigmaJar.toString());
+};
+
+// define onclick handler for buttons
+document.getElementById("query-copy-btn").onclick = function () {
+  copyQuery();
+};
+
+function copyQuery() {
+  let queryCode = document.getElementById("query-code");
+  navigator.clipboard.writeText(queryCode.value);
+
+  var queryCopyBtn = document.getElementById("query-copy-btn");
+  queryCopyBtn.classList.toggle("text-sigma-blue");
+  queryCopyBtn.classList.toggle("text-green-400");
+
+  setTimeout(function () {
+    queryCopyBtn.classList.toggle("text-sigma-blue");
+    queryCopyBtn.classList.toggle("text-green-400");
+  }, 1200);
 }
 
-function info() {
-  $('.ui.modal').modal('show');
-  $('.ui.modal').addClass('inverted');
+function focusSelect(elementId) {
+  document.getElementById(elementId).focus();
 }
 
-const showFormats = () => {
-  let backend = $('#target-select').dropdown('get value');
-
-  let options = $('#format-select').find("option[backend$=" + backend + "]")
-
-	values = []
-	options = [...options]
-	options.forEach(option => {
-		values.push({"value": option.value, "name": option.innerHTML})
-	});
-  $('#format-select').dropdown('change values', values);
-  $('#format-select').dropdown('set selected', values[0].value);
-
+function getSelectValue(elementId) {
+  let select = document.getElementById(elementId);
+  let tomSelect = select.tomselect;
+  return tomSelect.getValue();
 }
 
-const showPipelines = () => {
-  let backend = $('#target-select').dropdown('get value');
+function generateCli() {
+  let cliCode = document.getElementById("cli-code");
+  let backend = getSelectValue("select-backend");
+  let format = getSelectValue("select-format");
+  let pipelines = getSelectValue("select-pipeline");
 
-  let options = $('#pipeline-select').find("option[backend$=" + backend + "], option[backend$=all]")
+  cliCommand = "sigma convert";
+  if (pipelines.length === 0) {
+    cliCommand = cliCommand + " --without-pipeline ";
+  }
+  pipelines.forEach((e) => {
+    cliCommand = cliCommand + " -p " + e;
+  });
 
-	values = []
-	options = [...options]
-	options.forEach(option => {
-		values.push({"value": option.value, "name": option.innerHTML})
-	});
-  $('#pipeline-select').dropdown('change values', values);
-}
-
-const cli = () => {
-	
-  let cliCode = document.getElementById('cli-code');
-  let pipeline = $('#pipeline-select').dropdown('get value');
-  let target = $('#target-select').dropdown('get value');
-  let format = $('#format-select').dropdown('get value');
-
-	cliCommand = "sigma convert"
-	if(pipeline.length === 0){
-		cliCommand = cliCommand + " --without-pipeline "
-	}
-	pipeline.forEach(e => {
-		cliCommand = cliCommand + " -p " + e
-	});
-
-	cliCommand = cliCommand + " -t " + target + " -f " + format + " rule.yml";
+  cliCommand = cliCommand + " -t " + backend + " -f " + format + " rule.yml";
   cliCode.innerHTML = cliCommand;
   Prism.highlightElement(cliCode); // rerun code highlighting
 }
 
-const convert = () => {
-  let resultCode = document.getElementById('result-code');
+function convert(sigmaRule) {
+  let queryCode = document.getElementById("query-code");
 
-  // get form values
-  let sigma = jar.toString()
-  let pipeline = $('#pipeline-select').dropdown('get value');
-  let target = $('#target-select').dropdown('get value');
-  let format = $('#format-select').dropdown('get value');
+  let backend = getSelectValue("select-backend");
+  let format = getSelectValue("select-format");
+  let pipelines = getSelectValue("select-pipeline");
 
   // create json object
   const params = {
-    rule: btoa(sigma),
-    pipeline: pipeline,
-    target: target,
+    rule: btoa(sigmaRule),
+    pipeline: pipelines,
+    target: backend,
     format: format
   };
 
-
   // send post request
   const xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function(e) {
-    if(xhr.readyState === 4){
-      if(xhr.status === 200 ){
-        // write converted querie to output
-        resultCode.innerHTML = xhr.response
-        resultCode.value = xhr.response
-        Prism.highlightElement(resultCode); // rerun code highlighting
-      }
-      else if(xhr.status === 500){
-        resultCode.innerHTML = "Error: Something went wrong"
+  xhr.onreadystatechange = function (e) {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        // write converted query to output code area
+        queryCode.innerHTML = xhr.response;
+        queryCode.value = xhr.response;
+        Prism.highlightElement(queryCode); // rerun code highlighting
+      } else if (xhr.status === 500) {
+        queryCode.innerHTML = "Error: Something went wrong";
       }
     }
-  }
-  xhr.open("post", window.location.origin + "/sigma", true)
-  xhr.setRequestHeader('Content-Type', 'application/json');
+  };
+  xhr.open("post", window.location.origin + "/sigma", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
   xhr.send(JSON.stringify(params));
+}
+
+function filterFormatOptions() {
+  // clear all elemeents from select
+  let select = document.getElementById("select-format");
+  let tomSelect = select.tomselect;
+  tomSelect.clear();
+  tomSelect.clearOptions();
+
+  // only add the formats which match the selected backend
+  let backend = getSelectValue("select-backend");
+  var options = select.querySelectorAll('option[backend$="' + backend + '"]');
+  options = [...options];
+  options.forEach((option) => {
+    tomSelect.addOption({
+      label: option.label,
+      value: option.value
+    });
+  });
+  // select the first element
+  tomSelect.addItem(options[0].value);
+}
+
+function filterPipelineOptions() {
+  // clear all elemeents from select
+  let select = document.getElementById("select-pipeline");
+  let tomSelect = select.tomselect;
+  tomSelect.clear();
+  tomSelect.clearOptions();
+
+  // only add the pipeplines which match the selected backend or have backend=="all"
+  let backend = getSelectValue("select-backend");
+  var options = select.querySelectorAll(
+    'option[backend$="' + backend + '"], option[backend$=all]'
+  );
+  options = [...options];
+  options.forEach((option) => {
+    tomSelect.addOption({
+      label: option.label,
+      value: option.value
+    });
+  });
 }
