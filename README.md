@@ -16,7 +16,7 @@ Welcome to sigconverter.io, a user-friendly converter for Sigma rules. This proj
 
 ```bash
 poetry install 
-poetry run run.py
+poetry run ./run.py
 ```
 
 ### With Docker:

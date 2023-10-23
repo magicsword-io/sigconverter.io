@@ -9,7 +9,7 @@ COPY ./ .
 # install the dependencies
 RUN apt update && apt install git -y
 
-RUN pip install -r requirements.txt
+RUN pip install poetry && poetry install
 
 # run the application
-CMD [ "python", "./run.py" ]
+CMD [ "poetry", "run", "./run.py" ]
