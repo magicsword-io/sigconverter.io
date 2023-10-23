@@ -2,7 +2,11 @@
 new TomSelect("#select-backend", {
   controlInput: null,
   valueField: "value",
-  labelField: "label"
+  labelField: "label",
+  sortField: {
+    field: "value",
+    direction: "asc"
+  }
 });
 new TomSelect("#select-format", {
   controlInput: null,
