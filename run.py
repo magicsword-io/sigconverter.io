@@ -16,9 +16,6 @@ plugins = InstalledSigmaPlugins.autodiscover()
 backends = plugins.backends
 pipeline_resolver = plugins.get_pipeline_resolver()
 pipelines = list(pipeline_resolver.list_pipelines()) 
-with open('requirements.txt', 'r') as f:
-    requirements = f.read()
-
 
 @app.route('/')
 def home():
@@ -33,7 +30,7 @@ def home():
         else:
             pipeline.backends = "all"
 
-    return render_template('index.html', backends=backends, pipelines=pipelines, formats=formats, requirements=requirements)
+    return render_template('index.html', backends=backends, pipelines=pipelines, formats=formats)
 
 @app.route('/sigma', methods=['POST'])
 def convert():
