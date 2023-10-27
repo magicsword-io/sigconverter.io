@@ -12,4 +12,5 @@ RUN apt update && apt install git -y
 RUN pip install poetry && poetry install
 
 # run the application
+EXPOSE 8000
 CMD [ "poetry", "run", "./run.py" ]
