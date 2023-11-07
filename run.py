@@ -42,7 +42,7 @@ def convert():
         yaml.safe_load(rule)
     except:
         print("error")
-        return ("Error: No valid yaml input")
+        return Response(f"Error: Invalid Yaml Input", status=400, mimetype='text/html')
 
     pipeline = []
     if request.json['pipeline']:
@@ -61,7 +61,7 @@ def convert():
         if isinstance(result, list):
             result = result[0]
     except SigmaError as e:
-        return "Error: " + str(e)
+        return Response(f"Error: {str(e)}", status=400, mimetype='text/html')
 
     return result
 
