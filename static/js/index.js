@@ -108,7 +108,7 @@ function generateShareLink() {
 
   // generate link with parameters
   let shareParams =  "#backend=" + backend + "&format=" + format + "&rule=" + rule;
-  let shareUrl = location.protocol + "://" + location.host + "/" + shareParams;
+  let shareUrl = location.protocol + "//" + location.host + "/" + shareParams;
   window.history.pushState({}, null, shareParams);
   
   // copy link for sharing to clipboard
