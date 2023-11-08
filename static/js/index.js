@@ -127,6 +127,8 @@ function convert(sigmaRule) {
         queryCode.innerHTML = xhr.response;
         queryCode.value = xhr.response;
         Prism.highlightElement(queryCode); // rerun code highlighting
+      } else if (xhr.status === 400) {
+        queryCode.innerHTML = xhr.response;
       } else if (xhr.status === 500) {
         queryCode.innerHTML = "Error: Something went wrong";
       }
