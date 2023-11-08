@@ -25,7 +25,21 @@ new TomSelect("#select-pipeline", {
 
 // inital stuff todo when page is loaded
 window.onload = function () {
-  const urlParameter = new URL(window.location.toLocaleString()).searchParams;
+  // Get the fragment section from the current URL, without the '#' character
+  const fragment = window.location.hash.substring(1);
+
+  // Split the hash into key-value pair strings
+  const pairs = fragment.split('&');
+
+  // Parse each pair into a key and a value and store them in a map
+  const urlParameter = new Map();
+  pairs.forEach(function(pair) {
+    const [key, value] = pair.split('=');
+    // If both key and value are present, decode and store them
+    if (key && value) {
+      urlParameter.set(decodeURIComponent(key), decodeURIComponent(value));
+    }
+  });
   
   // check if rule parameter is in url
   if(urlParameter.has('rule')){
@@ -93,7 +107,7 @@ function generateShareLink() {
   let rule = encodeURIComponent(btoa(sigmaJar.toString()));
 
   // generate link with parameters
-  let shareParams =  "?backend=" + backend + "&format=" + format + "&rule=" + rule;
+  let shareParams =  "#backend=" + backend + "&format=" + format + "&rule=" + rule;
   let shareUrl = location.protocol + "://" + location.host + "/" + shareParams;
   window.history.pushState({}, null, shareParams);
   
