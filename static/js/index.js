@@ -25,11 +25,49 @@ new TomSelect("#select-pipeline", {
 
 // inital stuff todo when page is loaded
 window.onload = function () {
-  // select splunk backend by default
+  // Get the fragment section from the current URL, without the '#' character
+  const fragment = window.location.hash.substring(1);
+
+  // Split the hash into key-value pair strings
+  const pairs = fragment.split('&');
+
+  // Parse each pair into a key and a value and store them in a map
+  const urlParameter = new Map();
+  pairs.forEach(function(pair) {
+    const [key, value] = pair.split('=');
+    // If both key and value are present, decode and store them
+    if (key && value) {
+      urlParameter.set(decodeURIComponent(key), decodeURIComponent(value));
+    }
+  });
+  
+  // check if rule parameter is in url
+  if(urlParameter.has('rule')){
+    let rule = atob(urlParameter.get('rule'));
+    sigmaJar.updateCode(rule)
+  }
+
   let backendSelect = document.getElementById("select-backend");
-  backendSelect.tomselect.addItem("splunk");
-  // init filtering of dropdowns on page load
+  // get parameter backend from url and check if it's a valid option
+  if(urlParameter.has('backend') && backendSelect.querySelectorAll('option[value$="' + urlParameter.get('backend') + '"]').length > 0) {
+    // select item in dropdown
+    backendSelect.tomselect.addItem(urlParameter.get('backend'));
+  }
+  else { 
+    // select splunk backend as default
+    backendSelect.tomselect.addItem("splunk");
+  }
+
+  // only show formats for selected backend
   filterFormatOptions();
+
+  // get parameter format and select item in dropdown
+  let formatSelect = document.getElementById("select-format");
+  if(urlParameter.has('format')) {
+    formatSelect.tomselect.addItem(urlParameter.get('format'));
+  }
+
+  // only show pipelines available for selected backend
   filterPipelineOptions();
   // load cli command
   generateCli();
@@ -59,11 +97,39 @@ document.getElementById("select-pipeline").onchange = function () {
 document.getElementById("query-copy-btn").onclick = function () {
   copyQuery();
 };
+document.getElementById("rule-share-btn").onclick = function () {
+  generateShareLink();
+};
+
+function generateShareLink() {
+  let backend = getSelectValue("select-backend");
+  let format = getSelectValue("select-format");
+  let rule = encodeURIComponent(btoa(sigmaJar.toString()));
+
+  // generate link with parameters
+  let shareParams =  "#backend=" + backend + "&format=" + format + "&rule=" + rule;
+  let shareUrl = location.protocol + "://" + location.host + "/" + shareParams;
+  window.history.pushState({}, null, shareParams);
+  
+  // copy link for sharing to clipboard
+  navigator.clipboard.writeText(shareUrl);
+
+  // toggle color for user feedback
+  var ruleShareBtn = document.getElementById("rule-share-btn");
+  ruleShareBtn.classList.toggle("text-sigma-blue");
+  ruleShareBtn.classList.toggle("text-green-400");
+
+  setTimeout(function () {
+    ruleShareBtn.classList.toggle("text-sigma-blue");
+    ruleShareBtn.classList.toggle("text-green-400");
+  }, 1200);
+}
 
 function copyQuery() {
   let queryCode = document.getElementById("query-code");
   navigator.clipboard.writeText(queryCode.value);
 
+  // toggle color for user feedback
   var queryCopyBtn = document.getElementById("query-copy-btn");
   queryCopyBtn.classList.toggle("text-sigma-blue");
   queryCopyBtn.classList.toggle("text-green-400");
