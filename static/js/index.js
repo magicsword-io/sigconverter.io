@@ -75,6 +75,15 @@ window.onload = function () {
 
   // only show pipelines available for selected backend
   filterPipelineOptions();
+
+  let pipelineSelect = document.getElementById("select-pipeline");
+  if(urlParameter.has('pipeline')) {
+    const pipelineValues = urlParameter.get('pipeline').split(';');
+    pipelineValues.forEach(function(value) {
+      pipelineSelect.tomselect.addItem(value);
+    });
+  }
+
   // load cli command
   generateCli();
   // inital conversion of example rule
@@ -110,11 +119,12 @@ document.getElementById("rule-share-btn").onclick = function () {
 function generateShareLink() {
   let backend = getSelectValue("select-backend");
   let format = getSelectValue("select-format");
+  let pipelines = getSelectValue("select-pipeline");
   let rule = encodeURIComponent(btoa(sigmaJar.toString()));
   let template = encodeURIComponent(btoa(templateJar.toString()));
 
   // generate link with parameters
-  let shareParams =  "#backend=" + backend + "&format=" + format + "&rule=" + rule + "&template=" + template;
+  let shareParams =  "#backend=" + backend + "&format=" + format + "&pipeline=" + pipelines.join(";") + "&rule=" + rule + "&template=" + template;;
   let shareUrl = location.protocol + "//" + location.host + "/" + shareParams;
   window.history.pushState({}, null, shareParams);
   
