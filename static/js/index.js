@@ -23,7 +23,7 @@ new TomSelect("#select-pipeline", {
   labelField: "label"
 });
 
-// inital stuff todo when page is loaded
+// initial stuff todo when page is loaded
 window.onload = function () {
   // Get the fragment section from the current URL, without the '#' character
   const fragment = window.location.hash.substring(1);
@@ -45,6 +45,12 @@ window.onload = function () {
   if(urlParameter.has('rule')){
     let rule = atob(urlParameter.get('rule'));
     sigmaJar.updateCode(rule)
+  }
+
+  // check if template parameter is in url
+  if(urlParameter.has('template')){
+    let template = atob(urlParameter.get('template'));
+    templateJar.updateCode(template)
   }
 
   let backendSelect = document.getElementById("select-backend");
@@ -105,9 +111,10 @@ function generateShareLink() {
   let backend = getSelectValue("select-backend");
   let format = getSelectValue("select-format");
   let rule = encodeURIComponent(btoa(sigmaJar.toString()));
+  let template = encodeURIComponent(btoa(templateJar.toString()));
 
   // generate link with parameters
-  let shareParams =  "#backend=" + backend + "&format=" + format + "&rule=" + rule;
+  let shareParams =  "#backend=" + backend + "&format=" + format + "&rule=" + rule + "&template=" + template;
   let shareUrl = location.protocol + "//" + location.host + "/" + shareParams;
   window.history.pushState({}, null, shareParams);
   
@@ -169,19 +176,20 @@ function generateCli() {
   Prism.highlightElement(cliCode); // rerun code highlighting
 }
 
-function convert(sigmaRule) {
+function convert(sigmaRule, templatePysigma) {
   let queryCode = document.getElementById("query-code");
 
   let backend = getSelectValue("select-backend");
   let format = getSelectValue("select-format");
   let pipelines = getSelectValue("select-pipeline");
-
+  
   // create json object
   const params = {
     rule: btoa(sigmaRule),
     pipeline: pipelines,
     target: backend,
-    format: format
+    format: format,
+    template: btoa(templatePysigma)
   };
 
   // send post request

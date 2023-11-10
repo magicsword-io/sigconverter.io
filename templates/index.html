@@ -163,6 +163,7 @@ falsepositives:
     - Monitoring activity
 level: high</code></pre>
         </div>
+        
         <div class="lg:col-span-1 self-start lg:px-2">
           <p class="text-lg text-white font-bold">
             <span class="px-3 py-2 border-x border-t rounded border-sigma-blue">
@@ -172,6 +173,13 @@ level: high</code></pre>
           </p>
           <pre class="border border-sigma-blue">
             <code id="query-code" class="language-splunk-spl text-sm">the generated query should be displayed here :)</code></pre>
+        </div>
+
+        <div class="lg:col-span-1 self-start lg:px-2">
+          <p class="text-lg text-white font-bold">
+            <span class="px-3 py-2 border-x border-t rounded border-sigma-blue">Post-Processing Template</span>
+          </p>
+          <pre onclick="focusSelect('template-code')" class="border border-sigma-blue"><code id="template-code" class="language-yaml text-sm"></code></pre>
         </div>
       </div>
     </div>
@@ -195,10 +203,18 @@ level: high</code></pre>
     import {
       withLineNumbers
     } from 'https://medv.io/codejar/linenumbers.js'
+    
     window.sigmaJar = CodeJar(document.querySelector('#rule-code'), el => Prism.highlightElement(el))
     sigmaJar.onUpdate(sigmaRule => {
       if (sigmaRule.length > 0) {
-        convert(sigmaRule)
+        convert(sigmaRule, templateJar.toString())
+      }
+    })
+
+    window.templateJar = CodeJar(document.querySelector('#template-code'), el => Prism.highlightElement(el))
+    templateJar.onUpdate(templatePysigma => {
+      if (templatePysigma.length > 0) {
+        convert(sigmaJar.toString(), templatePysigma)
       }
     })
   </script>
