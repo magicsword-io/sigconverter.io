@@ -85,10 +85,15 @@
           <p class="text-lg text-white font-bold">
             <span class="px-3 py-2 border-x border-t rounded border-sigma-blue">
               <i id="rule-share-btn" class="fas fa-share-nodes px-1 py-0 my-0 text-sm text-sigma-blue cursor-pointer"></i>
+            </span>
+            <span id="tab-rule" class="px-3 py-2 ml-1 border-x border-t rounded border-sigma-blue bg-sigma-blue text-sigma-dark cursor-pointer file-tab">
               rule.yml
             </span>
+            <span id="tab-pipeline" class="px-3 py-2 ml-1 border-x border-t rounded border-sigma-blue cursor-pointer file-tab">
+              pipeline.yml
+            </span>
           </p>
-          <pre onclick="focusSelect('rule-code')" class="border border-sigma-blue"><code id="rule-code" class="language-yaml text-sm">title: Suspicious SYSTEM User Process Creation
+          <pre onclick="focusSelect('rule-code')" class="border border-sigma-blue tab-code"><code id="rule-code" class="language-yaml text-sm">title: Suspicious SYSTEM User Process Creation
 id: 2617e7ed-adb7-40ba-b0f3-8f9945fe6c09
 status: test
 description: Detects a suspicious process creation as SYSTEM user (suspicious program or command line parameter)
@@ -162,6 +167,7 @@ falsepositives:
     - Scripts and administrative tools used in the monitored environment
     - Monitoring activity
 level: high</code></pre>
+          <pre onclick="focusSelect('pipeline-code')" class="border border-sigma-blue tab-code hidden"><code id="pipeline-code" class="language-yaml text-sm"></code></pre>
         </div>
         
         <div class="lg:col-span-1 self-start lg:px-2">
@@ -175,12 +181,6 @@ level: high</code></pre>
             <code id="query-code" class="language-splunk-spl text-sm">the generated query should be displayed here :)</code></pre>
         </div>
 
-        <div class="lg:col-span-1 self-start lg:px-2">
-          <p class="text-lg text-white font-bold">
-            <span class="px-3 py-2 border-x border-t rounded border-sigma-blue">Post-Processing Template</span>
-          </p>
-          <pre onclick="focusSelect('template-code')" class="border border-sigma-blue"><code id="template-code" class="language-yaml text-sm"></code></pre>
-        </div>
       </div>
     </div>
 
@@ -207,14 +207,15 @@ level: high</code></pre>
     window.sigmaJar = CodeJar(document.querySelector('#rule-code'), el => Prism.highlightElement(el))
     sigmaJar.onUpdate(sigmaRule => {
       if (sigmaRule.length > 0) {
-        convert(sigmaRule, templateJar.toString())
+        convert(sigmaRule, pipelineJar.toString());
       }
     })
 
-    window.templateJar = CodeJar(document.querySelector('#template-code'), el => Prism.highlightElement(el))
-    templateJar.onUpdate(templatePysigma => {
-      if (templatePysigma.length > 0) {
-        convert(sigmaJar.toString(), templatePysigma)
+    window.pipelineJar = CodeJar(document.querySelector('#pipeline-code'), el => Prism.highlightElement(el))
+    pipelineJar.onUpdate(pipelineYml => {
+      generateCli();
+      if (pipelineYml.length > 0) {
+        convert(sigmaJar.toString(), pipelineYml);
       }
     })
   </script>

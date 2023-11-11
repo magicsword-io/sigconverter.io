@@ -35,6 +35,7 @@
 
 /* Code Area CSS */
 pre:has(> #rule-code),
+pre:has(> #pipeline-code),
 pre:has(> #query-code) {
   min-height: 200px;
   cursor: text;
@@ -42,6 +43,12 @@ pre:has(> #query-code) {
 
 pre:has(> #rule-code:empty)::after {
   content: "start writing your sigma rule...";
+  color: #c5c8c6;
+  width: 20px;
+}
+
+pre:has(> #pipeline-code:empty)::after {
+  content: "start writing your post processing pipeline...";
   color: #c5c8c6;
   width: 20px;
 }

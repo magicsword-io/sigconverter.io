@@ -60,10 +60,9 @@ def convert():
             pipeline.append(p)
 
     template_pipeline = ""
-    if request.json["template"]:
+    if request.json["pipelineYml"]:
         try:
-            template = str(base64.b64decode(request.json["template"]), "utf-8")
-            print(request.json)
+            template = str(base64.b64decode(request.json["pipelineYml"]), "utf-8")
             template_pipeline = pipeline_generic.from_yaml(template)
         except:
             print("Error while parsing the template")
