@@ -65,7 +65,9 @@ def convert():
             template = str(base64.b64decode(request.json["pipelineYml"]), "utf-8")
             template_pipeline = pipeline_generic.from_yaml(template)
         except:
-            print("Error while parsing the template")
+            return Response(
+                f"YamlError: Malformed Pipeline Yaml", status=400, mimetype="text/html"
+            )
 
     target = request.json["target"]
     format = request.json["format"]
