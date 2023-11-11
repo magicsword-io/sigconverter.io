@@ -235,8 +235,7 @@ function convert(sigmaRule, customPipeline) {
     pipelineYml: btoa(customPipeline),
     pipeline: pipelines,
     target: backend,
-    format: format,
-    template: btoa(templatePysigma)
+    format: format
   };
 
   // send post request
