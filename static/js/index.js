@@ -23,7 +23,7 @@ new TomSelect("#select-pipeline", {
   labelField: "label"
 });
 
-// inital stuff todo when page is loaded
+// initial stuff todo when page is loaded
 window.onload = function () {
   // Get the fragment section from the current URL, without the '#' character
   const fragment = window.location.hash.substring(1);
@@ -45,6 +45,12 @@ window.onload = function () {
   if(urlParameter.has('rule')){
     let rule = atob(urlParameter.get('rule'));
     sigmaJar.updateCode(rule)
+  }
+
+  // check if pipelineYml parameter is in url
+  if(urlParameter.has('pipelineYml')){
+    let pipelineYml = atob(urlParameter.get('pipelineYml'));
+    pipelineJar.updateCode(pipelineYml)
   }
 
   let backendSelect = document.getElementById("select-backend");
@@ -81,7 +87,7 @@ window.onload = function () {
   // load cli command
   generateCli();
   // inital conversion of example rule
-  convert(sigmaJar.toString());
+  convert(sigmaJar.toString(), pipelineJar.toString());
 };
 
 // define onchange handler for select dropdowns
@@ -89,17 +95,17 @@ document.getElementById("select-backend").onchange = function () {
   filterFormatOptions();
   filterPipelineOptions();
   generateCli();
-  convert(sigmaJar.toString());
+  convert(sigmaJar.toString(), pipelineJar.toString());
 };
 
 document.getElementById("select-format").onchange = function () {
   generateCli();
-  convert(sigmaJar.toString());
+  convert(sigmaJar.toString(), pipelineJar.toString());
 };
 
 document.getElementById("select-pipeline").onchange = function () {
   generateCli();
-  convert(sigmaJar.toString());
+  convert(sigmaJar.toString(), pipelineJar.toString());
 };
 
 // define onclick handler for buttons
@@ -109,15 +115,48 @@ document.getElementById("query-copy-btn").onclick = function () {
 document.getElementById("rule-share-btn").onclick = function () {
   generateShareLink();
 };
+document.getElementById("tab-rule").onclick = function () {
+  showTab("tab-rule", "rule-code");
+};
+document.getElementById("tab-pipeline").onclick = function () {
+  showTab("tab-pipeline", "pipeline-code");
+};
+
+function showTab(tabId, codeId){
+  var i, tabcontent, tablinks;
+  var tab = document.getElementById(tabId);
+  var code = document.getElementById(codeId);
+  
+  // hide all code areas
+  tabcontent = document.getElementsByClassName("tab-code");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].classList.add('hidden');
+  }
+
+  // remove color from all tabs
+  tablinks = document.getElementsByClassName("file-tab");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].classList.remove('bg-sigma-blue');
+    tablinks[i].classList.remove('text-sigma-dark');
+  }
+
+  // display the selected code area
+  code.parentElement.classList.remove('hidden');
+
+  // change color of tab button to indicate selected code area
+  tab.classList.add('bg-sigma-blue');
+  tab.classList.add('text-sigma-dark');
+}
 
 function generateShareLink() {
   let backend = getSelectValue("select-backend");
   let format = getSelectValue("select-format");
   let pipelines = getSelectValue("select-pipeline");
   let rule = encodeURIComponent(btoa(sigmaJar.toString()));
+  let pipelineYml = encodeURIComponent(btoa(pipelineJar.toString()));
 
   // generate link with parameters
-  let shareParams =  "#backend=" + backend + "&format=" + format + "&pipeline=" + pipelines.join(";") + "&rule=" + rule;
+  let shareParams =  "#backend=" + backend + "&format=" + format + "&pipeline=" + pipelines.join(";") + "&rule=" + rule + "&pipelineYml=" + pipelineYml;
   let shareUrl = location.protocol + "//" + location.host + "/" + shareParams;
   window.history.pushState({}, null, shareParams);
   
@@ -167,28 +206,33 @@ function generateCli() {
   let pipelines = getSelectValue("select-pipeline");
 
   cliCommand = "sigma convert";
-  if (pipelines.length === 0) {
+  if (pipelines.length === 0 && pipelineJar.toString().length == 0) {
     cliCommand = cliCommand + " --without-pipeline ";
   }
   pipelines.forEach((e) => {
     cliCommand = cliCommand + " -p " + e;
   });
 
+  if(pipelineJar.toString().length > 0){
+    cliCommand = cliCommand + " -p pipeline.yml";
+  }
+
   cliCommand = cliCommand + " -t " + backend + " -f " + format + " rule.yml";
   cliCode.innerHTML = cliCommand;
   Prism.highlightElement(cliCode); // rerun code highlighting
 }
 
-function convert(sigmaRule) {
+function convert(sigmaRule, customPipeline) {
   let queryCode = document.getElementById("query-code");
 
   let backend = getSelectValue("select-backend");
   let format = getSelectValue("select-format");
   let pipelines = getSelectValue("select-pipeline");
-
+  
   // create json object
   const params = {
     rule: btoa(sigmaRule),
+    pipelineYml: btoa(customPipeline),
     pipeline: pipelines,
     target: backend,
     format: format
