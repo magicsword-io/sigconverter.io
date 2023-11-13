@@ -4,7 +4,8 @@
 import os
 import yaml
 import base64
-from flask import Flask, render_template, request, Response
+import json
+from flask import Flask, jsonify, render_template, request, Response
 
 from sigma.conversion.base import Backend
 from sigma.plugins import InstalledSigmaPlugins
@@ -19,6 +20,7 @@ pipeline_generic = pipeline.ProcessingPipeline()
 backends = plugins.backends
 pipeline_resolver = plugins.get_pipeline_resolver()
 pipelines = list(pipeline_resolver.list_pipelines())
+pipelines_names = [p[0] for p in pipelines]
 
 
 @app.route("/")
@@ -39,6 +41,11 @@ def home():
     return render_template(
         "index.html", backends=backends, pipelines=pipelines, formats=formats
     )
+
+
+@app.route("/getpipelines", methods=["GET"])
+def get_pipelines():
+    return jsonify(pipelines_names)
 
 
 @app.route("/sigma", methods=["POST"])

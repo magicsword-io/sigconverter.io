@@ -41,6 +41,15 @@ window.onload = function () {
     }
   });
   
+  // check if hideEditor parameter is in url
+  if(urlParameter.has('hideEditor')){
+    let hideEditor = urlParameter.get('hideEditor')
+    if(hideEditor == 1){
+      document.getElementById("rule-section").style.display = "none"
+      document.getElementById("rule-grid").setAttribute("class", "")
+    }
+  }
+
   // check if rule parameter is in url
   if(urlParameter.has('rule')){
     let rule = atob(urlParameter.get('rule'));
