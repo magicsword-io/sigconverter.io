@@ -41,7 +41,7 @@ window.onload = function () {
     }
   });
   
-  // check if rule parameter is in url
+  // check if hideEditor parameter is in url
   if(urlParameter.has('hideEditor')){
     let hideEditor = urlParameter.get('hideEditor')
     if(hideEditor == 1){
