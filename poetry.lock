@@ -305,277 +305,205 @@ diagrams = ["jinja2", "railroad-diagrams"]
 
 [[package]]
 name = "pysigma"
-version = "0.9.11"
+version = "0.10.9"
 description = "Sigma rule processing and conversion tools"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pysigma-0.9.11-py3-none-any.whl", hash = "sha256:a7fda2108e2d37e6b3862aa4f9b3e52c6b1ed92c67a8eb83b77709b099d53044"},
-    {file = "pysigma-0.9.11.tar.gz", hash = "sha256:f0df5d44a00c0794422338b348ad1df1b9791175b6f38a0eeeff0a08ee0f29a4"},
+    {file = "pysigma-0.10.9-py3-none-any.whl", hash = "sha256:6217b5863afdf924b8d60c86d0592c29c1627ec09ff27fc2923e9de22cb99a1d"},
+    {file = "pysigma-0.10.9.tar.gz", hash = "sha256:aa498c9b6daafcfd0001e6f7b78e6f9c04302b8bc18e8c486eb54197982b248d"},
 ]
 
 [package.dependencies]
+jinja2 = ">=3.1.2,<4.0.0"
 packaging = ">=22.0,<23.0"
 pyparsing = ">=3.0.7,<4.0.0"
 pyyaml = ">=6.0,<7.0"
 requests = ">=2.28.1,<3.0.0"
 
 [[package]]
-name = "pysigma-backend-azure"
-version = "0.1.2"
-description = "pySigma Azure Backend"
-optional = false
-python-versions = "^3.8"
-files = []
-develop = false
-
-[package.dependencies]
-pysigma = "^0.9.6"
-
-[package.source]
-type = "git"
-url = "https://github.com/sifex/pySigma-backend-azure.git"
-reference = "9c35b78cd4d4891e1b46ccf21ed555ffb10b96e6"
-resolved_reference = "9c35b78cd4d4891e1b46ccf21ed555ffb10b96e6"
-
-[[package]]
 name = "pysigma-backend-carbonblack"
-version = "0.1.4"
+version = "0.1.5"
 description = "pySigma carbonblack backend"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pysigma_backend_carbonblack-0.1.4-py3-none-any.whl", hash = "sha256:58e3c4735da7a6db70e8cbca020fa96fbaaf4b03ecfe23aea16357a2ebda6dae"},
-    {file = "pysigma_backend_carbonblack-0.1.4.tar.gz", hash = "sha256:2b9db6b87bd2f338686b355801279a50aaeacca1bb0e03fd80e9197f3bddffb1"},
+    {file = "pysigma_backend_carbonblack-0.1.5-py3-none-any.whl", hash = "sha256:f4ca0d470c40c036699da407762c76ba95d1aba457b5cd0a8757856e287f9b13"},
+    {file = "pysigma_backend_carbonblack-0.1.5.tar.gz", hash = "sha256:fa47af2659b732878818acc9d9e6abd5d287fb737ade5ecf20d368780a69de64"},
 ]
 
 [package.dependencies]
-pysigma = ">=0.9.6,<0.10.0"
+pysigma = ">=0.9.6"
 
 [[package]]
 name = "pysigma-backend-cortexxdr"
-version = "0.1.1"
+version = "0.1.2"
 description = "pySigma CortexXDR backend"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pysigma_backend_cortexxdr-0.1.1-py3-none-any.whl", hash = "sha256:1665abc1f60472956d972a791f4931fb356cbcf8014ffb1f5684d765e8a6f850"},
-    {file = "pysigma_backend_cortexxdr-0.1.1.tar.gz", hash = "sha256:827c9e0f4a61d5c9526aa0f576754de87b58787cc6c1665129aadeffebc017fd"},
+    {file = "pysigma_backend_cortexxdr-0.1.2-py3-none-any.whl", hash = "sha256:f853c1ee145b5da6a73386d872aa3804fbdeadc19b18558c54c2b75aa6f8a800"},
+    {file = "pysigma_backend_cortexxdr-0.1.2.tar.gz", hash = "sha256:bd7ff50499d80fad4b42026f1d05411b7066e9140d367a1d76aa60d7a6f1ebd7"},
 ]
 
 [package.dependencies]
-pysigma = ">=0.9.8,<0.10.0"
+pysigma = ">=0.9.8"
 
 [[package]]
 name = "pysigma-backend-elasticsearch"
-version = "1.0.5"
+version = "1.0.9"
 description = "pySigma Elasticsearch backend"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pysigma_backend_elasticsearch-1.0.5-py3-none-any.whl", hash = "sha256:e6dff7cdad47a848c1f95d42609334b7b6dec2fbc7f4b263576055ecdf0c2ae6"},
-    {file = "pysigma_backend_elasticsearch-1.0.5.tar.gz", hash = "sha256:0985cc3435716ed96355ab66850818a9e29fc8de935be882c630b72caedc0f87"},
+    {file = "pysigma_backend_elasticsearch-1.0.9-py3-none-any.whl", hash = "sha256:dad15ae8710b44107959dd73a8ce3329a505e643b9fd3613649669d8aa3bc062"},
+    {file = "pysigma_backend_elasticsearch-1.0.9.tar.gz", hash = "sha256:dbddfe6f09ee1152c4d49c0fa1db839bcfc206267855b8aa4551384b40cd71a4"},
 ]
 
 [package.dependencies]
-pysigma = ">=0.9.5,<0.10.0"
+pysigma = ">=0.10.2,<0.11.0"
 
 [[package]]
 name = "pysigma-backend-insightidr"
-version = "0.2.1"
+version = "0.2.2"
 description = "pySigma Rapid7 InsightIDR backend"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pysigma-backend-insightidr-0.2.1.tar.gz", hash = "sha256:9259e77cd49ae96dd87ad52c36c23138251e591911ac67da0c913564da749534"},
-    {file = "pysigma_backend_insightidr-0.2.1-py3-none-any.whl", hash = "sha256:944400b405d714e3cf4141a7a4c055c7d92ada5a7517336be607cafec401deb3"},
+    {file = "pysigma_backend_insightidr-0.2.2-py3-none-any.whl", hash = "sha256:f562d95d4a6fa0f540df4c7980d2c1f89103f64d556a22c5926daa4436db4c7e"},
+    {file = "pysigma_backend_insightidr-0.2.2.tar.gz", hash = "sha256:0f5a0f2f4b3a31a36901e1d44ca1c01e8ef7973a1c5bbddcf6103f7bef7f702d"},
 ]
 
 [package.dependencies]
-pysigma = ">=0.9.11,<0.10.0"
+pysigma = ">=0.10.1,<0.11.0"
 
 [[package]]
 name = "pysigma-backend-loki"
-version = "0.9.1"
+version = "0.10.3"
 description = "pySigma Loki backend"
 optional = false
-python-versions = "^3.8"
-files = []
-develop = false
+python-versions = ">=3.8,<4.0"
+files = [
+    {file = "pysigma_backend_loki-0.10.3-py3-none-any.whl", hash = "sha256:5d24fd31282e3800c602987069cbb53c38f4da3d732d795eab9ac579104d6629"},
+    {file = "pysigma_backend_loki-0.10.3.tar.gz", hash = "sha256:1c6f96dea7a38b5cac0a0ce8c95f4d2c26740eecce513e7610005635738baf22"},
+]
 
 [package.dependencies]
-pysigma = "^0.9.11"
-pysigma-pipeline-sysmon = "^1.0.1"
-
-[package.source]
-type = "git"
-url = "https://github.com/grafana/pySigma-backend-loki.git"
-reference = "452aa0d8bb096bbabdca5a83a884c45662dec666"
-resolved_reference = "452aa0d8bb096bbabdca5a83a884c45662dec666"
-
-[[package]]
-name = "pysigma-backend-microsoft365defender"
-version = "0.2.1"
-description = "pySigma Microsoft 365 Defender backend"
-optional = false
-python-versions = "^3.8"
-files = []
-develop = false
-
-[package.dependencies]
-certifi = "^2023.07.22"
-pysigma = "^0.9.0"
-
-[package.source]
-type = "git"
-url = "https://github.com/AttackIQ/pySigma-backend-microsoft365defender.git"
-reference = "731db4b6c7cbab8898973b4350d93268e135c495"
-resolved_reference = "731db4b6c7cbab8898973b4350d93268e135c495"
+pysigma = ">=0.10.6,<0.11.0"
+pysigma-pipeline-sysmon = ">=1.0.3,<2.0.0"
 
 [[package]]
 name = "pysigma-backend-opensearch"
-version = "1.0.0"
+version = "1.0.1"
 description = "pySigma OpenSearch backend"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pysigma_backend_opensearch-1.0.0-py3-none-any.whl", hash = "sha256:9f9afebbb0f1d020199685c151aca90797c80454614cd803d22917c8096c15ae"},
-    {file = "pysigma_backend_opensearch-1.0.0.tar.gz", hash = "sha256:7d961ad6bbf1bf7ac8cdb0f6140a453a45bf270a1bba837d904756e9cd53f8f3"},
+    {file = "pysigma_backend_opensearch-1.0.1-py3-none-any.whl", hash = "sha256:44d53a0a3fdbcf167dea5709b756bd8229cb7340715ff06a14c4ce56d090d4b4"},
+    {file = "pysigma_backend_opensearch-1.0.1.tar.gz", hash = "sha256:23e7664a5a38993e99cf373eca82d9c26949d30881fce5274a5878ee4eb08554"},
 ]
 
 [package.dependencies]
-pysigma = ">=0.9.5,<0.10.0"
-pysigma-backend-elasticsearch = ">=1.0.0,<2.0.0"
-
-[[package]]
-name = "pysigma-backend-qradar"
-version = "0.3.3"
-description = "pySigma Qradar backend"
-optional = false
-python-versions = ">=3.8,<4.0"
-files = [
-    {file = "pysigma-backend-qradar-0.3.3.tar.gz", hash = "sha256:bc7cab0df22dbc48be80f46e876df1ca43908352f6277b6d70c7db389579b3e0"},
-    {file = "pysigma_backend_qradar-0.3.3-py3-none-any.whl", hash = "sha256:d2822e485c630f27f2ada4401a9f052e63af1668acb7707af518d5b686c91dc9"},
-]
-
-[package.dependencies]
-pysigma = ">=0.9.4,<0.10.0"
+pysigma = ">=0.10.2,<0.11.0"
+pysigma-backend-elasticsearch = ">=1.0.6,<2.0.0"
 
 [[package]]
 name = "pysigma-backend-qradar-aql"
-version = "0.2.3"
+version = "0.2.5"
 description = "pySigma QRadarAQL backend"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pysigma_backend_qradar_aql-0.2.3-py3-none-any.whl", hash = "sha256:c57bf03f3cca6ef1a3b57d099cd06ec96ebd4144d515a0c6d36359fb3dc6134b"},
-    {file = "pysigma_backend_qradar_aql-0.2.3.tar.gz", hash = "sha256:f46e31cdb2b98b7f9e445511da7a0bc843f8ff4e2865c91401a4fc053af97246"},
+    {file = "pysigma_backend_qradar_aql-0.2.5-py3-none-any.whl", hash = "sha256:2587d96d4b5ece8991d32f75ccfb50b576fec1aa002a19eae5a92c601d7a2743"},
+    {file = "pysigma_backend_qradar_aql-0.2.5.tar.gz", hash = "sha256:897052e193dbcc05f5345101c290e947306f78ddb0f9d96055758a41a21257f4"},
 ]
 
 [package.dependencies]
-pysigma = ">=0.9.8,<0.10.0"
+pysigma = ">=0.9.8,<0.11.0"
 
 [[package]]
 name = "pysigma-backend-sentinelone"
-version = "0.1.2"
+version = "0.1.3"
 description = "pySigma SentinelOne backend"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pysigma_backend_sentinelone-0.1.2-py3-none-any.whl", hash = "sha256:6fd866819d4b816e5a4fc633c51e1f06ad8cec563852d6f5b104f58e9fb1d800"},
-    {file = "pysigma_backend_sentinelone-0.1.2.tar.gz", hash = "sha256:e2c58d73d6f23d8ddb5e31861cd249b038a0990738e9d945ffb1551a330092ac"},
+    {file = "pysigma_backend_sentinelone-0.1.3-py3-none-any.whl", hash = "sha256:308556bdc0af5e74868f93d64784db2b0e29f8c75c98b4b348be751351cfc35f"},
+    {file = "pysigma_backend_sentinelone-0.1.3.tar.gz", hash = "sha256:06f72af3eba3bede57f795f98cf35be9efd498553535feb7f2ec0de061d40dda"},
 ]
 
 [package.dependencies]
-pysigma = ">=0.9.5,<0.10.0"
-
-[[package]]
-name = "pysigma-backend-sentinelone-pq"
-version = "0.1.1"
-description = "pySigma SentinelOne PowerQuery backend"
-optional = false
-python-versions = ">=3.8,<4.0"
-files = [
-    {file = "pysigma_backend_sentinelone_pq-0.1.1-py3-none-any.whl", hash = "sha256:0a31e46662c07b425aa6f5f3aaaac06f1529a66355caf31375d14cda2202de22"},
-    {file = "pysigma_backend_sentinelone_pq-0.1.1.tar.gz", hash = "sha256:41fcbbba19e4ad9a7203cfe2b337dd08e7920c23a76c037a133f33883c06f6b8"},
-]
-
-[package.dependencies]
-pysigma = ">=0.9.5,<0.10.0"
+pysigma = ">=0.9.5"
 
 [[package]]
 name = "pysigma-backend-splunk"
-version = "1.0.2"
+version = "1.0.3"
 description = "pySigma Splunk backend"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pysigma_backend_splunk-1.0.2-py3-none-any.whl", hash = "sha256:5004da3ca9b455f66ec52c00a51b37d2bebf61013229cc0ce67e8e36f18a8375"},
-    {file = "pysigma_backend_splunk-1.0.2.tar.gz", hash = "sha256:b02262274ef94922a0033e5526873061f7a6f6281bd1bb6e83df0a9c10c32866"},
+    {file = "pysigma_backend_splunk-1.0.3-py3-none-any.whl", hash = "sha256:5313c8cecd650620c17c009cf62b00dcadd760b06aef02d7361e5ac9c720c736"},
+    {file = "pysigma_backend_splunk-1.0.3.tar.gz", hash = "sha256:1365eb00efa4b6a506022463fa33dfa1b2133dff2f99e7eb6cb51414836e557d"},
 ]
 
 [package.dependencies]
-pysigma = ">=0.9.0,<0.10.0"
+pysigma = ">=0.10.2,<0.11.0"
 
 [[package]]
-name = "pysigma-backend-stix"
-version = "0.1.8"
-description = "STIX language backend for pySigma convertor"
+name = "pysigma-backend-uberagent"
+version = "0.3.61"
+description = "pySigma uAQL backend"
 optional = false
-python-versions = "^3.8"
-files = []
-develop = false
+python-versions = ">=3.8,<4.0"
+files = [
+    {file = "pySigma-backend-uberAgent-0.3.61.tar.gz", hash = "sha256:2595eb0e6619990432b75bc079f11ccb79d90fa5e0eafcae63fe0fb99006c209"},
+    {file = "pysigma_backend_uberagent-0.3.61-py3-none-any.whl", hash = "sha256:a726e714ebd90c4c0de3601ad998103f96052c31b284b7854bcafe0d038d4e53"},
+]
 
 [package.dependencies]
-pysigma = "^0.9.5"
-
-[package.source]
-type = "git"
-url = "https://github.com/barvhaim/pySigma-backend-stix"
-reference = "0d7c05e187249c26f5abb99f63bf839c78705d1e"
-resolved_reference = "0d7c05e187249c26f5abb99f63bf839c78705d1e"
+pysigma = ">=0.10.2,<0.11.0"
 
 [[package]]
 name = "pysigma-pipeline-crowdstrike"
-version = "1.0.0"
+version = "1.0.1"
 description = "pySigma CrowdStrike processing pipelines"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pysigma_pipeline_crowdstrike-1.0.0-py3-none-any.whl", hash = "sha256:7bbb8b3b3dc776dc95f71b0d4136e6624398348df959cc50fe26d6e24ad3dd68"},
-    {file = "pysigma_pipeline_crowdstrike-1.0.0.tar.gz", hash = "sha256:7bea9cd891ee1f75ccf19dab2662e68a48ecc590a68ca797d7853e59f0944295"},
+    {file = "pysigma_pipeline_crowdstrike-1.0.1-py3-none-any.whl", hash = "sha256:f19522bf144d9a4cad11fd08458414eeed8bd5843b0213a1c4bff66db6049dff"},
+    {file = "pysigma_pipeline_crowdstrike-1.0.1.tar.gz", hash = "sha256:8c38420a4a7fc252bf890a6b777bcd651cd63f2636bc9591014df4db1bbf159f"},
 ]
 
 [package.dependencies]
-pysigma = ">=0.9.2,<0.10.0"
+pysigma = ">=0.10.2,<0.11.0"
 
 [[package]]
 name = "pysigma-pipeline-sysmon"
-version = "1.0.2"
+version = "1.0.3"
 description = "pySigma Sysmon processing pipelines"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pysigma_pipeline_sysmon-1.0.2-py3-none-any.whl", hash = "sha256:8c2d3be5a097c5ec4f852a09ad7c2f890fb1ddea204df906b2c5bea0eeb0901f"},
-    {file = "pysigma_pipeline_sysmon-1.0.2.tar.gz", hash = "sha256:fad4f91eff5c8099a766dad7f449861844d4ad3c4e1d5e341fbfdc56b55f738b"},
+    {file = "pysigma_pipeline_sysmon-1.0.3-py3-none-any.whl", hash = "sha256:c99bf7010c2b7aad796795868c9c977f098e7814a3e32d31ac9a443069db1a6b"},
+    {file = "pysigma_pipeline_sysmon-1.0.3.tar.gz", hash = "sha256:eca7c80f6be2917ece789d9bca598557926cec9daae1d008c1dcbeac6a724d7c"},
 ]
 
 [package.dependencies]
-pysigma = ">=0.9.0,<0.10.0"
+pysigma = ">=0.10.2,<0.11.0"
 
 [[package]]
 name = "pysigma-pipeline-windows"
-version = "1.1.0"
+version = "1.1.1"
 description = "pySigma Windows processing pipelines"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pysigma_pipeline_windows-1.1.0-py3-none-any.whl", hash = "sha256:7598bf8df5f37306d32145faf062acd1aa5d805ba6f33a23c91855c6071dd471"},
-    {file = "pysigma_pipeline_windows-1.1.0.tar.gz", hash = "sha256:60dc6794fb3ef7d885d7d65db64305def73d4dcbeea9f3a2e71f728927af0847"},
+    {file = "pysigma_pipeline_windows-1.1.1-py3-none-any.whl", hash = "sha256:851640cde475cd014672cf3a3c0041306c2141fd86fd8337a25b2e167bde44f8"},
+    {file = "pysigma_pipeline_windows-1.1.1.tar.gz", hash = "sha256:250be40012a351db5a322647cdf7290919ec6195944bda313b7743d8822594a5"},
 ]
 
 [package.dependencies]
-pysigma = ">=0.9.1,<0.10.0"
+pysigma = ">=0.10.2,<0.11.0"
 
 [[package]]
 name = "pyyaml"
@@ -659,20 +587,20 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "sigma-cli"
-version = "0.7.6"
+version = "0.7.10"
 description = "Sigma Command Line Interface (conversion, check etc.) based on pySigma"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "sigma_cli-0.7.6-py3-none-any.whl", hash = "sha256:99a8f2928550d21a37aa7c91fccfcf04019ef752b9345618170693d23efb05de"},
-    {file = "sigma_cli-0.7.6.tar.gz", hash = "sha256:045c73e461dd6b23e59c4d3f9ae21637256bf18093930cf02bafd24c71861228"},
+    {file = "sigma_cli-0.7.10-py3-none-any.whl", hash = "sha256:363f4cc5fc485f83755fc96ed32a5766d9be189706bff5b0fe6f7926dae03623"},
+    {file = "sigma_cli-0.7.10.tar.gz", hash = "sha256:6f212e6e571224689e1373c7cdc6c228e49560250e6c5f8233c14a94a0cee8c2"},
 ]
 
 [package.dependencies]
 click = ">=8.0.3,<9.0.0"
 colorama = ">=0.4.6,<0.5.0"
 prettytable = ">=3.1.1,<4.0.0"
-pysigma = ">=0.9.9,<0.10.0"
+pysigma = ">=0.10.4,<0.11.0"
 
 [[package]]
 name = "urllib3"
@@ -722,4 +650,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "43ecec0c2d14dabcceb7bcdfba0e69906fc72d556d0dda9b808578fa99c2a7b3"
+content-hash = "f052e21f2829d9afd73e2e5577c9d93430aa34ff84fa9108045546e60a512caa"
