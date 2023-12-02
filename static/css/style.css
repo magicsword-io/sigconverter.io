@@ -53,10 +53,18 @@ pre:has(> #pipeline-code:empty)::after {
   width: 20px;
 }
 
-div[class*="language-"],
-code[class*="language-"],
-code[class*="language-"] *,
-pre[class*="language-"] {
+div[class*="language-yaml"],
+code[class*="language-yaml"],
+code[class*="language-yaml"] *,
+pre[class*="language-yaml"] {
+  word-break: break-word !important;
+  white-space: pre !important;
+}
+
+div[class*="language-splunk"],
+code[class*="language-splunk"],
+code[class*="language-splunk"] *,
+pre[class*="language-splunk"] {
   word-break: break-word !important;
   white-space: pre-line !important;
 }
