@@ -130,3 +130,23 @@ code[class*="language-"] span::selection {
 .select-sigma.ts-wrapper.plugin-remove_button:not(.rtl) .item .remove {
   border-color: var(--sigma-blue);
 }
+
+.beta-banner {
+  background-color: #f0ad4e; /* Orange color for visibility */
+  color: white;
+  text-align: center;
+  padding: 5px;
+  font-weight: bold;
+}
+
+.feature-highlights {
+  background-color: #333; /* Dark background */
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.main-site-link {
+  color: #007bff; /* Blue color for visibility */
+  text-decoration: underline;
+}
