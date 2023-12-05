@@ -66,26 +66,34 @@ def convert():
         for p in request.json["pipeline"]:
             pipeline.append(p)
 
-    template_pipeline = ""
+    custom_pipelines_list = []
     if request.json["pipelineYml"]:
-        try:
-            template = str(base64.b64decode(request.json["pipelineYml"]), "utf-8")
-            template_pipeline = pipeline_generic.from_yaml(template)
-        except:
-            return Response(
-                f"YamlError: Malformed Pipeline Yaml", status=400, mimetype="text/html"
-            )
+        pipelineYml = str(base64.b64decode(request.json["pipelineYml"]), "utf-8")
+        pipelineYml_list = pipelineYml.split("\n---")
+        for pipeline_ in pipelineYml_list:
+            try:
+                custom_pipelines_list.append(pipeline_generic.from_yaml(pipeline_))
+            except:
+                return Response(
+                    f"YamlError: Malformed Pipeline Yaml", status=400, mimetype="text/html"
+                )
 
     target = request.json["target"]
     format = request.json["format"]
 
-    backend_class = backends[target]
-    processing_pipeline = pipeline_resolver.resolve(pipeline)
+    try:
+        backend_class = backends[target]
+    except:
+        return Response(f"Unknown Backend", status=400, mimetype="text/html")
+    
+    try:
+        processing_pipeline = pipeline_resolver.resolve(pipeline)
+    except:
+        return Response(f"Unknown Builtin Pipeline", status=400, mimetype="text/html")
 
-    if isinstance(template_pipeline, ProcessingPipeline):
-        processing_pipeline += template_pipeline
-    else:
-        print("no processing pipeline")
+    for pipeline_ in custom_pipelines_list:
+        if isinstance(pipeline_, ProcessingPipeline):
+            processing_pipeline += pipeline_
 
     backend: Backend = backend_class(processing_pipeline=processing_pipeline)
 
@@ -96,6 +104,8 @@ def convert():
             result = result[0]
     except SigmaError as e:
         return Response(f"SigmaError: {str(e)}", status=400, mimetype="text/html")
+    except:
+        return Response(f"UnknownError: {str(e)}", status=400, mimetype="text/html")
 
     return result
 
