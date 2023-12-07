@@ -15,23 +15,34 @@ from sigma.processing import pipeline
 from sigma.processing.pipeline import ProcessingPipeline
 
 app = Flask(__name__)
+
 plugins = InstalledSigmaPlugins.autodiscover()
+
 pipeline_generic = pipeline.ProcessingPipeline()
+
 backends = plugins.backends
+backend_names = [name for name, backend in backends.items()]
+
 pipeline_resolver = plugins.get_pipeline_resolver()
 pipelines = list(pipeline_resolver.list_pipelines())
-pipelines_names = [p[0] for p in pipelines]
+pipeline_names = [p[0] for p in pipelines]
+
+allowed_backends = {}
+
+for name, pipeline in pipelines:
+    if len(pipeline.allowed_backends) > 0:
+        allowed_backends[name] = ", ".join(pipeline.allowed_backends)
+    else:
+        allowed_backends[name] = "all"
+
+formats = []
+for backend in backends.keys():
+    for name, description in plugins.backends[backend].formats.items():
+        formats.append({"name": name, "description": description, "backend": backend})
 
 
 @app.route("/")
 def home():
-    formats = []
-    for backend in backends.keys():
-        for name, description in plugins.backends[backend].formats.items():
-            formats.append(
-                {"name": name, "description": description, "backend": backend}
-            )
-
     for name, pipeline in pipelines:
         if len(pipeline.allowed_backends) > 0:
             pipeline.backends = ", ".join(pipeline.allowed_backends)
@@ -44,8 +55,23 @@ def home():
 
 
 @app.route("/getpipelines", methods=["GET"])
-def get_pipelines():
-    return jsonify(pipelines_names)
+def get_pipelines_api():
+    return jsonify(pipeline_names)
+
+
+@app.route("/getbackends", methods=["GET"])
+def get_backends_api():
+    return jsonify(backend_names)
+
+
+@app.route("/getformats", methods=["GET"])
+def get_formats_api():
+    return jsonify(formats)
+
+
+@app.route("/getpipelineallowedbackend", methods=["GET"])
+def get_pipeline_allowed_backend():
+    return jsonify(allowed_backends)
 
 
 @app.route("/sigma", methods=["POST"])
