@@ -23,6 +23,7 @@ pysigma-pipeline-crowdstrike = "^1.0.1"
 pysigma-pipeline-sysmon = "^1.0.3"
 pysigma-pipeline-windows = "^1.1.1"
 pysigma-backend-uberagent = "^0.3.61"
+pysigma-backend-panther-sdyaml = "^0.1.3"
 
 
 [build-system]
