@@ -101,6 +101,7 @@ window.onload = function () {
 
 // define onchange handler for select dropdowns
 document.getElementById("select-backend").onchange = function () {
+  updateBackendSyntax();
   filterFormatOptions();
   filterPipelineOptions();
   generateCli();
@@ -308,4 +309,44 @@ function filterPipelineOptions() {
       value: option.value
     });
   });
+}
+
+// Updates the query-code code block with a prismjs class mapped to the language
+function updateBackendSyntax() {
+  let backend = getSelectValue("select-backend");
+  let language = "";
+  let prev_language = "";
+
+  // Determines what class was previously present upon a new backend selection
+  let prev_lang_class = document.getElementById("query-code").classList;
+  for (let prev of prev_lang_class) {
+    if (prev.match(/^language-\w+(-\w+)?/)) {
+      prev_language = prev
+    }
+  }
+
+  // TODO: Find a more effective method (e.g. Enum) to implement targets
+  // with their respective language syntax highlighting.
+  switch(backend) {
+    case "azure":
+      language = "language-kusto";
+      break;
+    case "ibm-qradar-aql":
+      language = "language-sql";
+      break;
+    case "microsoft365defender":
+      language = "language-kusto";
+      break;
+    case "splunk":
+      language = "language-splunk-spl";
+      break;
+    case "qradar":
+      language = "language-sql";
+      break;
+    default:
+      language = "language-sql";
+  }
+
+  document.getElementById("query-code").classList.remove(prev_language);
+  document.getElementById("query-code").classList.toggle(language);
 }

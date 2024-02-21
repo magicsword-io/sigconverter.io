@@ -61,10 +61,23 @@ pre[class*="language-yaml"] {
   white-space: pre !important;
 }
 
-div[class*="language-splunk"],
+code[class*="language-kusto"],
+code[class*="language-kusto"] *,
+pre[class*="language-kusto"] {
+  word-break: break-word !important;
+  white-space: pre-line !important;
+}
+
 code[class*="language-splunk"],
 code[class*="language-splunk"] *,
 pre[class*="language-splunk"] {
+  word-break: break-word !important;
+  white-space: pre-line !important;
+}
+
+code[class*="language-sql"],
+code[class*="language-sql"] *,
+pre[class*="language-sql"] {
   word-break: break-word !important;
   white-space: pre-line !important;
 }
