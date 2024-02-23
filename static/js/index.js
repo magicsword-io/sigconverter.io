@@ -316,6 +316,7 @@ function updateBackendSyntax() {
   let backend = getSelectValue("select-backend");
   let language = "";
   let prev_language = "";
+  let default_language = "language-sql";
 
   // Determines what class was previously present upon a new backend selection
   let prev_lang_class = document.getElementById("query-code").classList;
@@ -325,27 +326,15 @@ function updateBackendSyntax() {
     }
   }
 
-  // TODO: Find a more effective method (e.g. Enum) to implement targets
-  // with their respective language syntax highlighting.
-  switch(backend) {
-    case "azure":
-      language = "language-kusto";
-      break;
-    case "ibm-qradar-aql":
-      language = "language-sql";
-      break;
-    case "microsoft365defender":
-      language = "language-kusto";
-      break;
-    case "splunk":
-      language = "language-splunk-spl";
-      break;
-    case "qradar":
-      language = "language-sql";
-      break;
-    default:
-      language = "language-sql";
-  }
+  const languageMap = {
+    "azure" : "language-kusto",
+    "ibm-qradar-aql": "language-sql",
+    "microsoft365defender": "language-kusto",
+    "splunk": "language-splunk-spl",
+    "qradar": "language-sql"
+  };
+
+  language = languageMap[backend] ? languageMap[backend] : default_language;
 
   document.getElementById("query-code").classList.remove(prev_language);
   document.getElementById("query-code").classList.toggle(language);
