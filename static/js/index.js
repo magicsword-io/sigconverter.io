@@ -52,13 +52,13 @@ window.onload = function () {
 
   // check if rule parameter is in url
   if(urlParameter.has('rule')){
-    let rule = atob(urlParameter.get('rule'));
+    let rule = base64Decode(urlParameter.get('rule'));
     sigmaJar.updateCode(rule)
   }
 
   // check if pipelineYml parameter is in url
   if(urlParameter.has('pipelineYml')){
-    let pipelineYml = atob(urlParameter.get('pipelineYml'));
+    let pipelineYml = base64Decode(urlParameter.get('pipelineYml'));
     pipelineJar.updateCode(pipelineYml)
   }
 
@@ -132,6 +132,14 @@ document.getElementById("tab-pipeline").onclick = function () {
   showTab("tab-pipeline", "pipeline-code");
 };
 
+function base64Encode(str) {
+    return window.btoa(unescape(encodeURIComponent(str)));
+}
+
+function base64Decode(str) {
+    return decodeURIComponent(escape(window.atob(str)));
+}
+
 function showTab(tabId, codeId){
   var i, tabcontent, tablinks;
   var tab = document.getElementById(tabId);
@@ -162,8 +170,8 @@ function generateShareLink() {
   let backend = getSelectValue("select-backend");
   let format = getSelectValue("select-format");
   let pipelines = getSelectValue("select-pipeline");
-  let rule = encodeURIComponent(btoa(sigmaJar.toString()));
-  let pipelineYml = encodeURIComponent(btoa(pipelineJar.toString()));
+  let rule = encodeURIComponent(base64Encode(sigmaJar.toString()));
+  let pipelineYml = encodeURIComponent(base64Encode(pipelineJar.toString()));
 
   // generate link with parameters
   let shareParams =  "#backend=" + backend + "&format=" + format + "&pipeline=" + pipelines.join(";") + "&rule=" + rule + "&pipelineYml=" + pipelineYml;
@@ -241,8 +249,8 @@ function convert(sigmaRule, customPipeline) {
   
   // create json object
   const params = {
-    rule: btoa(sigmaRule),
-    pipelineYml: btoa(customPipeline),
+    rule: base64Encode(sigmaRule),
+    pipelineYml: base64Encode(customPipeline),
     pipeline: pipelines,
     target: backend,
     format: format
