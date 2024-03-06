@@ -964,4 +964,8 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
+<<<<<<< HEAD
 content-hash = "bac1ab6ac1a95707a73687df601087480246e1a3af68bedf0b23a7878f9f7b7a"
+=======
+content-hash = "0ae6e5278148eb1e4d0b6a929dc6901090d7a205f825bc366045254d758ffae1"
+>>>>>>> a3967e3 (fix poetry.lock)
