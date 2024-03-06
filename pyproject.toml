@@ -11,7 +11,7 @@ pysigma-backend-azure = {git = "https://github.com/sifex/pySigma-backend-azure.g
 pysigma-backend-loki = {git = "https://github.com/grafana/pySigma-backend-loki.git", rev = "452aa0d8bb096bbabdca5a83a884c45662dec666"}
 pysigma-backend-microsoft365defender = {git = "https://github.com/AttackIQ/pySigma-backend-microsoft365defender.git", rev = "731db4b6c7cbab8898973b4350d93268e135c495"}
 pysigma-backend-stix = {git = "https://github.com/barvhaim/pySigma-backend-stix", rev = "0d7c05e187249c26f5abb99f63bf839c78705d1e"}
-flask = "^3.0.0"
+flask = "^3.0.2"
 sigma-cli = "0.7.6"
 pysigma = "0.9.11"
 pysigma-backend-carbonblack = "0.1.4"
