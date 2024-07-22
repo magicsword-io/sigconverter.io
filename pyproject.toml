@@ -23,7 +23,7 @@ pysigma-pipeline-crowdstrike = "^1.0.3"
 pysigma-pipeline-sysmon = "^1.0.4"
 pysigma-pipeline-windows = "^1.2.0"
 pysigma-backend-uberagent = "^0.3.66"
-pysigma-backend-panther = "^0.2.2"
+# pysigma-backend-panther = "^0.2.1" ## Disabled until https://github.com/panther-labs/pySigma-backend-panther/issues/57 is resolved
 
 
 [build-system]
