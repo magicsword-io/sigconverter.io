@@ -1,31 +1,31 @@
 [tool.poetry]
 name = "sigconverter.io"
-version = "0.1.0"
+version = "0.1.2"
 description = ""
 authors = ["magicsword <info@magicsword.io>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-flask = "3.0.0"
-pysigma = "^0.11.9"
+flask = "^3.0.3"
 sigma-cli = "^1.0.4"
+pysigma = "^0.11.14"
 pysigma-backend-loki = "^0.11.5"
-pysigma-backend-carbonblack = "^0.1.6"
-# pysigma-backend-cortexxdr = "^0.1.3" ## Disabled until https://github.com/7RedViolin/pySigma-backend-cortexxdr/issues/15 is resolved
-pysigma-backend-elasticsearch = "^1.1.1"
+pysigma-backend-carbonblack = "^0.1.8"
+pysigma-backend-cortexxdr = "^0.1.4"
+pysigma-backend-elasticsearch = "^1.1.2"
 pysigma-backend-opensearch = "^1.0.2"
 pysigma-backend-qradar-aql = "^0.3.2"
 pysigma-backend-sentinelone = "^0.1.3"
+pysigma-backend-sentinelone-pq = "^0.1.4"
 pysigma-backend-splunk = "^1.1.0"
-# pysigma-backend-insightidr = "^0.2.3" ## Disabled until support for 11.9 is available
-pysigma-pipeline-crowdstrike = "^1.0.3"
+pysigma-backend-insightidr = "^0.2.4"
+pysigma-pipeline-crowdstrike = "^2.0.0"
 pysigma-pipeline-sysmon = "^1.0.4"
 pysigma-pipeline-windows = "^1.2.0"
-pysigma-backend-uberagent = "^0.3.66"
-# pysigma-backend-panther = "^0.2.1" ## Disabled until https://github.com/panther-labs/pySigma-backend-panther/issues/57 is resolved
-pysigma-backend-logpoint = "0.1.0"
-
+pysigma-backend-uberagent = "^0.3.67"
+pysigma-backend-panther = "^0.2.2"
+pysigma-backend-logpoint = "^0.1.0"
 
 [build-system]
 requires = ["poetry-core"]
