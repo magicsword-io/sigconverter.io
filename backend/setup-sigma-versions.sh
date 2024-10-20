@@ -17,6 +17,5 @@ for VERSION in $SIGMA_VERSIONS; do
 
     # remove if installed because of https://github.com/redsand/pySigma-backend-hawk/issues/1
     uv -q remove pySigma-backend-hawk
-    uv -q remove pysigma-backend-kusto
     cd ..
 done
