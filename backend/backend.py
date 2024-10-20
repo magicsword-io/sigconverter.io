@@ -4,8 +4,8 @@
 import os
 import yaml
 import base64
-import json
-from flask import Flask, jsonify, render_template, request, Response
+import importlib.metadata as metadata
+from flask import Flask, jsonify, request, Response
 
 from sigma.conversion.base import Backend
 from sigma.plugins import InstalledSigmaPlugins
@@ -20,43 +20,59 @@ pipeline_generic = pipeline.ProcessingPipeline()
 backends = plugins.backends
 pipeline_resolver = plugins.get_pipeline_resolver()
 pipelines = list(pipeline_resolver.list_pipelines())
-pipelines_names = [p[0] for p in pipelines]
 
-
-@app.route("/")
-def home():
-    formats = []
-    for backend in backends.keys():
-        for name, description in plugins.backends[backend].formats.items():
-            formats.append(
-                {"name": name, "description": description, "backend": backend}
+@app.route("/api/v1/targets", methods=["GET"])
+def get_targets():
+    response = []
+    for name, backend in backends.items():
+            response.append(
+            {"name": name, "description": backend.name}
             )
+    return jsonify(response)
 
-    for name, pipeline in pipelines:
-        if len(pipeline.allowed_backends) > 0:
-            pipeline.backends = ", ".join(pipeline.allowed_backends)
-        else:
-            pipeline.backends = "all"
+@app.route("/api/v1/formats", methods=["GET"])
+def get_formats():
+    args = request.args
+    response = []
+    if len(args) == 0:
+        for backend in backends.keys():
+            for name, description in plugins.backends[backend].formats.items():
+                response.append(
+                    {"name": name, "description": description, "target": backend}
+                )
+    elif "target" in args:
+        target = args.get("target")
+        for backend in backends.keys():
+            if backend == target:
+                for name, description in plugins.backends[backend].formats.items():
+                    response.append(
+                        {"name": name, "description": description}
+                    )
 
-    return render_template(
-        "index.html", backends=backends, pipelines=pipelines, formats=formats
-    )
+    return jsonify(response)
 
-
-@app.route("/getpipelines", methods=["GET"])
+@app.route("/api/v1/pipelines", methods=["GET"])
 def get_pipelines():
-    return jsonify(pipelines_names)
+    args = request.args
+    response = []
+    if len(args) == 0:
+        for name, pipeline in pipelines:
+            response.append({"name": name, "targets": list(pipeline.allowed_backends)})
+    elif "target" in args:
+        target = args.get("target")
+        for name, pipeline in pipelines:
+            if (len(pipeline.allowed_backends) == 0) or (target in pipeline.allowed_backends):
+                response.append({"name": name, "targets": list(pipeline.allowed_backends)})
+    return jsonify(response)
 
 
-@app.route("/sigma", methods=["POST"])
+@app.route("/api/v1/convert", methods=["POST"])
 def convert():
-    # get params from request
     rule = str(base64.b64decode(request.json["rule"]), "utf-8")
     # check if input is valid yaml
     try:
         yaml.safe_load(rule)
     except:
-        print("error")
         return Response(
             f"YamlError: Malformed yaml file", status=400, mimetype="text/html"
         )
@@ -84,7 +100,7 @@ def convert():
     try:
         backend_class = backends[target]
     except:
-        return Response(f"Unknown Backend", status=400, mimetype="text/html")
+        return Response(f"Unknown Target", status=400, mimetype="text/html")
     
     try:
         processing_pipeline = pipeline_resolver.resolve(pipeline)
@@ -109,6 +125,7 @@ def convert():
 
     return result
 
-
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
+    current_version = metadata.version("sigma-cli")
+    port = int(f'8{current_version.replace(".","")}')
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", port)))

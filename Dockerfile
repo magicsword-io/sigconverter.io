@@ -1,30 +1,17 @@
-# Use the specified Python version
 FROM python:3.11.4-slim-buster
 
-# Configure Poetry
-ENV POETRY_VERSION=1.6.1
-ENV POETRY_HOME=/opt/poetry
-ENV POETRY_VENV=/opt/poetry-venv
-ENV POETRY_CACHE_DIR=/opt/.cache
+# install dependencies
+RUN apt-get update 
+RUN apt-get install -y git curl jq
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
-# Install poetry separated from system interpreter
-RUN python3 -m venv $POETRY_VENV \
-    && $POETRY_VENV/bin/pip install -U pip setuptools \
-    && $POETRY_VENV/bin/pip install poetry==${POETRY_VERSION}
-
-# Add `poetry` to PATH
-ENV PATH="${PATH}:${POETRY_VENV}/bin"
-
-# Set the working directory
-WORKDIR /app
-
-# Install dependencies
-COPY poetry.lock pyproject.toml ./
-RUN poetry install
-
-# Copy the flask app to the working directory
+# define work directory
+WORKDIR /app/
 COPY . /app
 
-# Run the application
+# install backend
+RUN cd backend && ./setup-sigma-versions.sh
+
+# launch front- and backend
 EXPOSE 8000
-CMD [ "poetry", "run", "python", "./run.py" ]
+ENTRYPOINT ["./entrypoint.sh"]
