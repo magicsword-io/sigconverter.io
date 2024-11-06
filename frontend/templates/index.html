@@ -59,35 +59,35 @@
         <div class="lg:col-span-1 self-center">
           <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-4 sm:p-4">
             <div class="lg:px-1">
-              <label for="select-backend" class="text-sigma-blue">Backend:</label>
-              <select id="select-backend" class="select-sigma" autocomplete="off">
-                {%- for name, backend in backends.items() -%}
-                <option value="{{ name }}">{{ name }}</option>
-                {%- endfor -%}
+              <label for="select-backend" class="text-sigma-blue">Target:</label>
+              <select id="select-backend" class="select-sigma" placeholder="target selection" autocomplete="off">
               </select>
             </div>
             <div class="lg:px-1">
               <label for="select-format" class="text-sigma-blue">Format:</label>
-              <select id="select-format" class="select-sigma" autocomplete="off">
-                {%- for format in formats -%}
-                <option hidden backend="{{ format.backend }}" value="{{ format.name }}">{{ format.name }}</option>
-                {%- endfor -%}
+              <select id="select-format" class="select-sigma" placeholder="format selection" autocomplete="off">
               </select>
             </div>
             <div class="lg:px-1">
               <label for="select-pipeline" class="text-sigma-blue">Pipeline:</label>
               <select id="select-pipeline" class="select-sigma" name="pipeline[]" placeholder="select pipelines..." multiple autocomplete="off">
-                {%- for name, pipeline in pipelines -%}
-                <option hidden value="{{ name }}" backend="{{ pipeline.backends }}">{{ name }}</option>
-                {%- endfor -%}
               </select>
             </div>
           </div>
         </div>
-        <div class="lg:col-span-1 lg:px-2">
-          <label for="cli-code" class="text-sigma-blue">CLI:</label>
-          <pre class="border border-sigma-blue"><code id="cli-code" class="language-bash text-sm">run this cli command for the same result</code></pre>
+
+        <div class="grid grid-cols-12 content-center">
+          <div class="col-span-11 lg:px-2">
+            <label for="cli-code" class="text-sigma-blue">CLI:</label>
+            <pre class="border border-sigma-blue"><code id="cli-code" class="language-bash text-sm">run this cli command for the same result</code></pre>
+          </div>
+          <!-- <div class="col-span-1"> -->
+            <span class="col-span-1 text-white self-center pl-3 pt-3 cursor-pointer">
+              <i id="settings-btn" class="fas fa-cog text-2xl"></i>
+            </span>
+          <!-- </div> -->
         </div>
+
       </div>
     </div>
     <div id="content-section" class="mx-10 mt-5">
@@ -194,6 +194,26 @@ level: high</code></pre>
       </div>
     </div>
 
+  </div>
+
+  <!-- Setting Modal -->
+  <div id="settings-modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-sigma-dark border-sigma-blue border rounded-lg shadow-lg w-1/3 p-6 relative">
+      <!-- Modal Close Button (Top Right Corner) -->
+      <button id="settings-close-btn" class="absolute top-2 right-2 text-sigma-blue hover:text-white text-2xl font-bold">&times;</button>
+      
+      <!-- Modal Header -->
+      <div class="mb-4">
+        <h2 class="text-xl text-sigma-blue font-semibold">Settings</h2>
+      </div>
+
+      <!-- Modal Body with Select Form -->
+      <div class="mb-4">
+        <label for="select-sigma-version" class="block text-white font-medium mb-2">Select a sigma-cli version:</label>
+        <select id="select-sigma-version" class="select-sigma">
+        </select>
+      </div>
+    </div>
   </div>
 
   <!-- tom-select -->
