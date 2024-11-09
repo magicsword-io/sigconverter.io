@@ -13,5 +13,8 @@ COPY . /app
 RUN cd backend && ./setup-sigma-versions.sh
 
 # launch front- and backend
+# Expose frontend port
 EXPOSE 8000
+# Expose backend ports (for Sigma versions)
+EXPOSE 8100-8199
 ENTRYPOINT ["./entrypoint.sh"]

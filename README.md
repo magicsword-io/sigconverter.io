@@ -22,8 +22,15 @@ poetry run ./run.py
 ### With Docker:
 
 ```bash
+# Build the image
 docker build -t sigconverter.io .
-docker run -d -p 8000:8000 sigconverter.io
+
+# Run the container
+# Note: We need to expose both the frontend port (8000) and backend ports (8100-8199)
+docker run -d \
+  -p 8000:8000 \
+  -p 8100-8199:8100-8199 \
+  sigconverter.io
 ```
 
 Visit the live instance at [https://sigconverter.io](https://sigconverter.io) or locally at [http://localhost:8000](http://localhost:8000).

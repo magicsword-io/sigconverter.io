@@ -18,9 +18,11 @@ def version_key(version):
 def get_port_from_version(version):
     pattern = r"^\d+\.\d+\.\d+$"
     if re.match(pattern, version):
-        return int(f'8{version.replace(".", "")}')
-    else:
-        return None
+        try:
+            return int(f'8{version.replace(".", "")}')
+        except ValueError:
+            return None
+    return None
 
 
 @app.route("/")
