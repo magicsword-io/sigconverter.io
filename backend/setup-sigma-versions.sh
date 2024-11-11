@@ -18,8 +18,10 @@ for VERSION in $SIGMA_VERSIONS; do
     # remove if installed because of https://github.com/redsand/pySigma-backend-hawk/issues/1
     uv -q remove pySigma-backend-hawk
 
-    # TODO: some problems with kusto backend, disable for now
-    uv -q remove pySigma-backend-kusto
+    # some problems with kusto backend, disable for older sigma versions
+    if [[ $VERSION == 0.* ]]; then
+        uv -q remove pySigma-backend-kusto
+    fi
 
     # remove unused pyparsing imports in older version, see https://github.com/SigmaHQ/pySigma/pull/289#issuecomment-2410153076
     find ./ -iwholename "*sigma/conversion/base.py" -exec sed -i "/from pyparsing import Set/d" {} +
