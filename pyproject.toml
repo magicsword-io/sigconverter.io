@@ -1,13 +1,18 @@
-[project]
+[tool.poetry]
 name = "sigconverter"
 version = "1.0.0"
 description = "SigConverter - Sigma rule converter web application"
+authors = ["Magic Sword <info@magicsword.io>"]
 readme = "README.md"
-requires-python = ">=3.10"
-authors = [{ name = "Magic Sword", email = "info@magicsword.io" }]
-dependencies = [
-    "flask>=3.0.3",
-    "setuptools>=75.1.0",
-    "requests>=2.32.3",
-    "pyyaml>=6.0.1"
-]
+packages = [{include = "app"}]
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+flask = ">=3.0.3"
+setuptools = ">=75.1.0"
+requests = ">=2.32.3"
+pyyaml = ">=6.0.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

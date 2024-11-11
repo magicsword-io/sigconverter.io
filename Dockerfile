@@ -14,24 +14,26 @@ RUN apt-get update && apt-get install -y \
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
 # define work directory
-WORKDIR /app/
+WORKDIR /repo/
 
-# Copy pyproject.toml first
-COPY pyproject.toml uv.lock ./
+# Copy application files first
+COPY . .
+
+# Ensure proper permissions
+RUN chown -R root:root /repo && \
+    chmod -R 755 /repo
 
 # Install main application dependencies with uv
 RUN uv venv && \
     . .venv/bin/activate && \
     uv pip install -e .
 
-# Copy application files
-COPY app /app/app
-
 # Make setup script executable
-RUN chmod +x /app/app/setup.py
+RUN chmod +x app/setup.py
 
-# Setup Sigma versions using pip
-RUN cd /app/app && python setup.py
+# Setup Sigma versions using the virtual environment's Python
+RUN . .venv/bin/activate && \
+    python app/setup.py
 
 # launch application
 EXPOSE 8000

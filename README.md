@@ -13,18 +13,24 @@ Welcome to sigconverter.io, a user-friendly converter for Sigma rules. This proj
 
 ## 🚀 Getting Started
 
-### Without Docker:
+### Local Development:
 
 ```bash
+# Install Poetry if you haven't already
+curl -sSL https://install.python-poetry.org | python3 -
+
+# Clone the repository
+git clone https://github.com/magicsword-io/sigconverter.io.git
+cd sigconverter.io
+
 # Install dependencies
-cd backend
-pip install .
+poetry install
 
 # Setup Sigma versions
-./setup-sigma-versions.sh
+poetry run python app/setup.py
 
 # Run the application
-python backend.py
+poetry run python app/main.py
 ```
 
 ### With Docker:

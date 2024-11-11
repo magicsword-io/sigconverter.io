@@ -4,58 +4,90 @@ import json
 import subprocess
 from pathlib import Path
 
+def get_sigma_versions():
+    """Fetch the 10 latest versions of sigma-cli from PyPI"""
+    import requests
+    response = requests.get("https://pypi.org/pypi/sigma-cli/json")
+    versions = sorted(response.json()["releases"].keys())
+    return versions[-10:]  # Return 10 latest versions
+
+def get_sigma_backends():
+    """Fetch all available Sigma backends from the plugin directory"""
+    import requests
+    try:
+        response = requests.get("https://raw.githubusercontent.com/SigmaHQ/pySigma-plugin-directory/main/pySigma-plugins-v1.json")
+        data = response.json()
+        
+        # Skip problematic backends
+        excluded_backends = {
+            "pySigma-backend-hawk",     # https://github.com/redsand/pySigma-backend-hawk/issues/1
+            "pySigma-backend-kusto"    # Known issues with kusto backend
+        }
+        
+        backends = []
+        for plugin_id, plugin_info in data.get("plugins", {}).items():
+            if "package" in plugin_info:
+                package = plugin_info["package"]
+                # Skip if package or its git URL is in excluded list
+                if package not in excluded_backends and not any(excluded in package for excluded in excluded_backends):
+                    backends.append(package)
+        
+        print(f"Found {len(backends)} backends to attempt installation")
+        return backends
+    except Exception as e:
+        print(f"Error fetching backends: {e}")
+        return ["pysigma-backend-splunk", "pysigma-backend-elasticsearch"]
+
 def install_core_backends(python_path, sigma_version):
     """Install core backends that are known to work"""
     # First install required dependencies
     base_packages = [
         "pyyaml",
-        f"sigma-cli=={sigma_version}",
-        "pysigma>=0.9.0,<0.12.0",  # Compatible with 1.0.x
         "setuptools",
-        "wheel"
+        "wheel",
+        "requests",
+        f"sigma-cli=={sigma_version}"  # Install sigma-cli first
     ]
     
-    # Install using pip instead of uv for better dependency resolution
+    # Install base packages
     for package in base_packages:
         try:
             print(f"Installing {package}...")
             subprocess.run([
-                python_path, "-m", "pip", "install", package
+                str(python_path), "-m", "pip", "install", "--no-cache-dir", package
             ], check=True)
         except subprocess.CalledProcessError as e:
-            print(f"Warning: Failed to install {package}: {e}")
+            print(f"Warning: Failed to install {package}")
             return False
     
-    # Install minimal set of backends
-    backends = [
-        "pysigma-backend-splunk>=0.9.0",
-        "pysigma-backend-elasticsearch>=0.9.0"
-    ]
+    # Install all available backends
+    backends = get_sigma_backends()
+    successful_installs = 0
     
     for backend in backends:
         try:
-            print(f"Installing {backend}...")
+            print(f"Attempting to install backend: {backend}")
             subprocess.run([
-                python_path, "-m", "pip", "install", backend
+                str(python_path), "-m", "pip", "install", "--no-cache-dir", backend
             ], check=True)
+            successful_installs += 1
         except subprocess.CalledProcessError as e:
-            print(f"Warning: Failed to install {backend}: {e}")
+            print(f"Note: Backend {backend} failed to install - might be incompatible with sigma-cli {sigma_version}")
+            continue
     
-    # Verify installation
-    try:
-        verify_cmd = [python_path, "-c", "import yaml; import sigma.backends"]
-        subprocess.run(verify_cmd, check=True)
-        return True
-    except subprocess.CalledProcessError:
-        print("Failed to verify package installation")
-        return False
+    print(f"Successfully installed {successful_installs} out of {len(backends)} backends")
+    return successful_installs > 0  # Return True if at least one backend was installed
 
 def setup_sigma_versions():
     """Setup Sigma versions with their virtual environments"""
-    versions = ["1.0.0", "1.0.1", "1.0.2", "1.0.3", "1.0.4"]  # Hardcode versions for now
+    versions = get_sigma_versions()
     installed_count = 0
     base_path = Path(__file__).parent / "sigma"
     base_path.mkdir(parents=True, exist_ok=True)
+    
+    # Get the current Python executable
+    import sys
+    python_executable = sys.executable
     
     for version in versions:
         print(f"\nSetting up Sigma version {version}")
@@ -63,16 +95,37 @@ def setup_sigma_versions():
             version_path = base_path / version
             version_path.mkdir(parents=True, exist_ok=True)
             
-            # Setup virtual environment using venv instead of uv
+            # Setup virtual environment
             venv_path = version_path / "venv"
-            subprocess.run([
-                "python3", "-m", "venv", str(venv_path)
-            ], check=True)
+            print(f"Creating virtual environment at: {venv_path}")
             
-            python_path = str(venv_path / "bin" / "python")
+            # Ensure the venv directory doesn't exist
+            if venv_path.exists():
+                import shutil
+                shutil.rmtree(venv_path)
+            
+            # Create venv using current Python executable
+            try:
+                subprocess.run([
+                    python_executable, "-m", "venv", 
+                    "--clear", "--system-site-packages",
+                    str(venv_path)
+                ], check=True, capture_output=True, text=True)
+            except subprocess.CalledProcessError as e:
+                print(f"venv creation output: {e.stdout}")
+                print(f"venv creation error: {e.stderr}")
+                raise
+                
+            # Verify venv creation
+            python_path = venv_path / "bin" / "python"
+            if not python_path.exists():
+                raise Exception(f"Python executable not found at {python_path}")
+            
+            print(f"Virtual environment created at: {venv_path}")
+            print(f"Python executable path: {python_path}")
             
             # Install core backends and verify
-            if install_core_backends(python_path, version):
+            if install_core_backends(str(python_path), version):
                 # Copy worker script to version directory
                 worker_path = Path(__file__).parent / "worker.py"
                 if worker_path.exists():
@@ -86,6 +139,8 @@ def setup_sigma_versions():
             
         except Exception as e:
             print(f"Error setting up version {version}: {e}")
+            import traceback
+            traceback.print_exc()
             continue
     
     return installed_count
@@ -95,4 +150,5 @@ if __name__ == "__main__":
     if count == 0:
         print("Error: No Sigma versions were installed successfully")
         exit(1)
-    print(f"Successfully installed {count} Sigma versions") 
+        
+    print(f"Successfully installed {count} Sigma versions")
