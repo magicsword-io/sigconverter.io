@@ -128,4 +128,4 @@ def convert():
 if __name__ == "__main__":
     current_version = metadata.version("sigma-cli")
     port = int(f'8{current_version.replace(".","")}')
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", port)))
+    app.run(host="0.0.0.0", port=port)
