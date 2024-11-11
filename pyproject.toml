@@ -1,11 +1,13 @@
 [project]
-name = "sigconverter-backend"
+name = "sigconverter"
 version = "1.0.0"
-description = "backend for the sigconverter projects"
+description = "SigConverter - Sigma rule converter web application"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{ name = "Magic Sword", email = "info@magicsword.io" }]
 dependencies = [
     "flask>=3.0.3",
     "setuptools>=75.1.0",
+    "requests>=2.32.3",
+    "pyyaml>=6.0.1"
 ]

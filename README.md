@@ -9,14 +9,22 @@ Welcome to sigconverter.io, a user-friendly converter for Sigma rules. This proj
 - Easy-to-use interface for Sigma rule conversion
 - Supports multiple backends through pySigma
 - Continuously updated to stay in sync with pySigma
+- Multiple Sigma versions support through isolated environments
 
 ## 🚀 Getting Started
 
 ### Without Docker:
 
 ```bash
-poetry install 
-poetry run ./run.py
+# Install dependencies
+cd backend
+pip install .
+
+# Setup Sigma versions
+./setup-sigma-versions.sh
+
+# Run the application
+python backend.py
 ```
 
 ### With Docker:
@@ -26,11 +34,7 @@ poetry run ./run.py
 docker build -t sigconverter.io .
 
 # Run the container
-# Note: We need to expose both the frontend port (8000) and backend ports (8100-8199)
-docker run -d \
-  -p 8000:8000 \
-  -p 8100-8199:8100-8199 \
-  sigconverter.io
+docker run -d -p 8000:8000 sigconverter.io
 ```
 
 Visit the live instance at [https://sigconverter.io](https://sigconverter.io) or locally at [http://localhost:8000](http://localhost:8000).
