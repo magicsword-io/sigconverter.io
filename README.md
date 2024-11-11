@@ -14,9 +14,16 @@ Welcome to sigconverter.io, a user-friendly converter for Sigma rules. This proj
 
 ### Without Docker:
 
+Requirements:
+
+- `python`
+- `curl`
+- `jq`
+- `uv` (https://docs.astral.sh/uv/getting-started/installation/)
+
 ```bash
-poetry install 
-poetry run ./run.py
+cd backend && ./setup-sigma-versions.sh && cd ..
+./entrypoint.sh
 ```
 
 ### With Docker:
