@@ -19,6 +19,10 @@ def get_port_from_version(version):
     pattern = r"^\d+\.\d+\.\d+$"
     if re.match(pattern, version):
         return int(f'8{version.replace(".", "")}')
+    elif version == "latest":
+        latest_version = sorted(
+            sigma_versions, key=version_key, reverse=True)[0]
+        return int(f'8{latest_version.replace(".", "")}')
     else:
         return None
 
