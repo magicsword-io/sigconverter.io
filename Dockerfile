@@ -10,6 +10,7 @@ WORKDIR /app/
 COPY . /app
 
 # install backend
+RUN find /app -type f -exec sed -i 's/\r$//' {} +
 RUN cd backend && ./setup-sigma-versions.sh
 
 # launch front- and backend
