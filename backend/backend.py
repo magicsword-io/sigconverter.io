@@ -120,7 +120,7 @@ def convert():
             result = result[0]
     except SigmaError as e:
         return Response(f"SigmaError: {str(e)}", status=400, mimetype="text/html")
-    except:
+    except Exception as e:
         return Response(f"UnknownError: {str(e)}", status=400, mimetype="text/html")
 
     return result
