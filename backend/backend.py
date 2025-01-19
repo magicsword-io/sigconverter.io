@@ -71,7 +71,7 @@ def convert():
     rule = str(base64.b64decode(request.json["rule"]), "utf-8")
     # check if input is valid yaml
     try:
-        yaml.safe_load(rule)
+        yaml.safe_load_all(rule)
     except:
         return Response(
             f"YamlError: Malformed yaml file", status=400, mimetype="text/html"
