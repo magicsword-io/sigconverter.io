@@ -97,6 +97,9 @@ def convert():
 
     target = request.json["target"]
     format = request.json["format"]
+    html_escape = False
+    if request.json.get("html") == "true":
+        html_escape = True
 
     try:
         backend_class = backends[target]
@@ -123,8 +126,11 @@ def convert():
         return Response(f"SigmaError: {str(e)}", status=400, mimetype="text/html")
     except Exception as e:
         return Response(f"UnknownError: {str(e)}", status=400, mimetype="text/html")
+    
+    if(html_escape):
+        result = html.escape(result)
 
-    return html.escape(result)
+    return result
 
 if __name__ == "__main__":
     current_version = metadata.version("sigma-cli")

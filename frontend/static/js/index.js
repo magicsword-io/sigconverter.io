@@ -313,6 +313,7 @@ function convert(sigmaRule, customPipeline) {
     pipeline: pipelines,
     target: backend,
     format: format,
+    html: "true"
   };
 
   // send post request
