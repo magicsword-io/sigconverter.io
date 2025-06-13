@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import html
 import yaml
 import base64
 import importlib.metadata as metadata
@@ -123,7 +124,7 @@ def convert():
     except Exception as e:
         return Response(f"UnknownError: {str(e)}", status=400, mimetype="text/html")
 
-    return result
+    return html.escape(result)
 
 if __name__ == "__main__":
     current_version = metadata.version("sigma-cli")
