@@ -23,7 +23,7 @@ for VERSION in $SIGMA_VERSIONS; do
         uv -q remove pySigma-backend-kusto
     fi
 
-    if [[ $VERSION == 2.0.0 ]]; then
+    if [[ $VERSION == 2.* ]]; then
         uv -q remove pySigma-backend-cortexxdr
         uv -q remove pySigma-backend-opensearch
         uv -q remove pysigma-backend-carbonblack
