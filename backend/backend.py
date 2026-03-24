@@ -127,9 +127,10 @@ def convert():
     except Exception as e:
         return Response(f"UnknownError: {str(e)}", status=400, mimetype="text/html")
     
-    if(html_escape):
+    if isinstance(result, dict):
+        return jsonify(result)
+    if html_escape:
         result = html.escape(result)
-
     return result
 
 if __name__ == "__main__":
