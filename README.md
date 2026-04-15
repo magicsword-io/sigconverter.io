@@ -26,6 +26,12 @@ cd backend && ./setup-sigma-versions.sh && cd ..
 ./entrypoint.sh
 ```
 
+### With Docker Compose (recommended):
+
+```bash
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
 ### With Docker:
 
 ```bash
