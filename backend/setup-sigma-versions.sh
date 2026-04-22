@@ -29,6 +29,12 @@ for VERSION in $SIGMA_VERSIONS; do
         uv -q remove pysigma-backend-carbonblack
     fi
 
+    if [[ $VERSION == 3.* ]]; then
+        uv -q remove pySigma-backend-cortexxdr
+        uv -q remove pySigma-backend-opensearch
+        uv -q remove pysigma-backend-carbonblack
+    fi
+
     # remove unused pyparsing imports in older version, see https://github.com/SigmaHQ/pySigma/pull/289#issuecomment-2410153076
     find ./ -iwholename "*sigma/conversion/base.py" -exec sed -i "/from pyparsing import Set/d" {} +
     find ./ -iwholename "*sigma/exceptions.py" -exec sed -i "/from pyparsing import List/d" {} +
