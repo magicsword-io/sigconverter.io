@@ -91,6 +91,9 @@
             <span id="tab-pipeline" class="px-3 py-2 ml-1 border-x border-t rounded border-sigma-blue cursor-pointer file-tab">
               pipeline.yml
             </span>
+            <span id="tab-filter" class="px-3 py-2 ml-1 border-x border-t rounded border-sigma-blue cursor-pointer file-tab">
+              filter.yml
+            </span>
           </p>
           <pre onclick="focusSelect('rule-code')" class="border border-sigma-blue tab-code"><code id="rule-code" class="language-yaml text-sm">title: Suspicious SYSTEM User Process Creation
 id: 2617e7ed-adb7-40ba-b0f3-8f9945fe6c09
@@ -167,6 +170,7 @@ falsepositives:
     - Monitoring activity
 level: high</code></pre>
           <pre onclick="focusSelect('pipeline-code')" class="border border-sigma-blue tab-code hidden"><code id="pipeline-code" class="language-yaml text-sm"></code></pre>
+          <pre onclick="focusSelect('filter-code')" class="border border-sigma-blue tab-code hidden"><code id="filter-code" class="language-yaml text-sm"></code></pre>
         </div>
         <div class="lg:col-span-1 self-start lg:px-2">
           <p class="text-lg text-white font-bold">
@@ -227,7 +231,7 @@ level: high</code></pre>
     window.sigmaJar = CodeJar(document.querySelector('#rule-code'), el => Prism.highlightElement(el))
     sigmaJar.onUpdate(sigmaRule => {
       if (sigmaRule.length > 0) {
-        convert(sigmaRule, pipelineJar.toString());
+        convert(sigmaRule, pipelineJar.toString(), filterJar.toString());
       }
     })
 
@@ -235,7 +239,15 @@ level: high</code></pre>
     pipelineJar.onUpdate(pipelineYml => {
       generateCli();
       if (pipelineYml.length > 0) {
-        convert(sigmaJar.toString(), pipelineYml);
+        convert(sigmaJar.toString(), pipelineYml, filterJar.toString());
+      }
+    })
+
+    window.filterJar = CodeJar(document.querySelector('#filter-code'), el => Prism.highlightElement(el))
+    filterJar.onUpdate(filterYml => {
+      generateCli();
+      if (filterYml.length > 0) {
+        convert(sigmaJar.toString(), pipelineJar.toString(), filterYml);
       }
     })
   </script>

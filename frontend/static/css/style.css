@@ -36,6 +36,7 @@
 /* Code Area CSS */
 pre:has(> #rule-code),
 pre:has(> #pipeline-code),
+pre:has(> #filter-code),
 pre:has(> #query-code) {
   min-height: 200px;
   cursor: text;
@@ -49,6 +50,12 @@ pre:has(> #rule-code:empty)::after {
 
 pre:has(> #pipeline-code:empty)::after {
   content: "start writing your post processing pipeline...";
+  color: #c5c8c6;
+  width: 20px;
+}
+
+pre:has(> #filter-code:empty)::after {
+  content: "start writing your filter...";
   color: #c5c8c6;
   width: 20px;
 }

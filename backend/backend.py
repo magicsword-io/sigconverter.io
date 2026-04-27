@@ -95,6 +95,19 @@ def convert():
                     f"YamlError: Malformed Pipeline Yaml", status=400, mimetype="text/html"
                 )
 
+    filter_yml = None
+    if request.json.get("filterYml"):
+        filter_yml = str(base64.b64decode(request.json["filterYml"]), "utf-8")
+        if filter_yml.strip():
+            try:
+                yaml.safe_load_all(filter_yml)
+            except:
+                return Response(
+                    f"YamlError: Malformed Filter Yaml", status=400, mimetype="text/html"
+                )
+        else:
+            filter_yml = None
+
     target = request.json["target"]
     format = request.json["format"]
     html_escape = False
@@ -118,7 +131,12 @@ def convert():
     backend: Backend = backend_class(processing_pipeline=processing_pipeline)
 
     try:
-        sigma_rule = SigmaCollection.from_yaml(rule)
+        if filter_yml:
+            combined_yaml = rule.rstrip() + "\n---\n" + filter_yml
+            sigma_rule = SigmaCollection.from_yaml(combined_yaml)
+            sigma_rule.resolve_rule_references()
+        else:
+            sigma_rule = SigmaCollection.from_yaml(rule)
         result = backend.convert(sigma_rule, format)
         if isinstance(result, list):
             result = result[0]
