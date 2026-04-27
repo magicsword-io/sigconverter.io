@@ -1,0 +1,10 @@
+# Optional: list of pySigma backends to install (one per line, '#' for comments).
+# Copy this file to `backends.txt` (at the repo root) to use it. If `backends.txt`
+# is absent or empty, `backend/setup-sigma-versions.sh` will fall back to installing
+# the full SigmaHQ plugin directory (https://github.com/SigmaHQ/pySigma-plugin-directory).
+#
+# Override the path with the BACKENDS_FILE env var (relative to backend/, or absolute):
+#   BACKENDS_FILE=/path/to/my-backends.txt ./setup-sigma-versions.sh
+
+pysigma-backend-splunk
+pySigma-backend-kusto
