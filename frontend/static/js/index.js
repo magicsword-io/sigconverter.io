@@ -74,6 +74,12 @@ window.onload = async function () {
     pipelineJar.updateCode(pipelineYml);
   }
 
+  // check if filterYml parameter is in url
+  if (urlParameter.has("filterYml")) {
+    let filterYml = base64Decode(urlParameter.get("filterYml"));
+    filterJar.updateCode(filterYml);
+  }
+
   let versionSelect = document.getElementById("select-sigma-version");
   if (urlParameter.has("version")) {
     versionSelect.tomselect.addItem(urlParameter.get("version"), true);
@@ -122,7 +128,7 @@ window.onload = async function () {
   // load cli command
   generateCli();
   // inital conversion of example rule
-  convert(sigmaJar.toString(), pipelineJar.toString());
+  convert(sigmaJar.toString(), pipelineJar.toString(), filterJar.toString());
 };
 
 // define onchange handler for select dropdowns
@@ -131,17 +137,17 @@ document.getElementById("select-backend").onchange = function () {
   filterFormatOptions();
   filterPipelineOptions();
   generateCli();
-  convert(sigmaJar.toString(), pipelineJar.toString());
+  convert(sigmaJar.toString(), pipelineJar.toString(), filterJar.toString());
 };
 
 document.getElementById("select-format").onchange = function () {
   generateCli();
-  convert(sigmaJar.toString(), pipelineJar.toString());
+  convert(sigmaJar.toString(), pipelineJar.toString(), filterJar.toString());
 };
 
 document.getElementById("select-pipeline").onchange = function () {
   generateCli();
-  convert(sigmaJar.toString(), pipelineJar.toString());
+  convert(sigmaJar.toString(), pipelineJar.toString(), filterJar.toString());
 };
 
 document.getElementById("select-sigma-version").onchange = async function () {
@@ -153,7 +159,7 @@ document.getElementById("select-sigma-version").onchange = async function () {
   filterFormatOptions();
   filterPipelineOptions();
   generateCli();
-  convert(sigmaJar.toString(), pipelineJar.toString());
+  convert(sigmaJar.toString(), pipelineJar.toString(), filterJar.toString());
 };
 
 // define onclick handler for buttons
@@ -168,6 +174,9 @@ document.getElementById("tab-rule").onclick = function () {
 };
 document.getElementById("tab-pipeline").onclick = function () {
   showTab("tab-pipeline", "pipeline-code");
+};
+document.getElementById("tab-filter").onclick = function () {
+  showTab("tab-filter", "filter-code");
 };
 document.getElementById("settings-btn").onclick = function () {
   let settingsModal = document.getElementById("settings-modal");
@@ -219,6 +228,7 @@ function generateShareLink() {
   let pipelines = getSelectValue("select-pipeline");
   let rule = encodeURIComponent(base64Encode(sigmaJar.toString()));
   let pipelineYml = encodeURIComponent(base64Encode(pipelineJar.toString()));
+  let filterYml = encodeURIComponent(base64Encode(filterJar.toString()));
 
   // generate link with parameters
   let shareParams =
@@ -233,7 +243,9 @@ function generateShareLink() {
     "&rule=" +
     rule +
     "&pipelineYml=" +
-    pipelineYml;
+    pipelineYml +
+    "&filterYml=" +
+    filterYml;
   let shareUrl = location.protocol + "//" + location.host + "/" + shareParams;
   window.history.pushState({}, null, shareParams);
 
@@ -294,12 +306,16 @@ function generateCli() {
     cliCommand = cliCommand + " -p pipeline.yml";
   }
 
+  if (filterJar.toString().length > 0) {
+    cliCommand = cliCommand + " --filter filter.yml";
+  }
+
   cliCommand = cliCommand + " -t " + backend + " -f " + format + " rule.yml";
   cliCode.innerHTML = cliCommand;
   Prism.highlightElement(cliCode); // rerun code highlighting
 }
 
-function convert(sigmaRule, customPipeline) {
+function convert(sigmaRule, customPipeline, customFilter) {
   let queryCode = document.getElementById("query-code");
 
   let backend = getSelectValue("select-backend");
@@ -310,6 +326,7 @@ function convert(sigmaRule, customPipeline) {
   const params = {
     rule: base64Encode(sigmaRule),
     pipelineYml: base64Encode(customPipeline),
+    filterYml: base64Encode(customFilter || ""),
     pipeline: pipelines,
     target: backend,
     format: format,

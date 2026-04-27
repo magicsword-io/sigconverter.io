@@ -26,6 +26,14 @@ cd backend && ./setup-sigma-versions.sh && cd ..
 ./entrypoint.sh
 ```
 
+By default, `setup-sigma-versions.sh` installs every backend from the [SigmaHQ plugin directory](https://github.com/SigmaHQ/pySigma-plugin-directory). To install only a curated subset (faster builds, smaller image), copy `backends.txt.example` to `backends.txt` at the repo root and edit it, one package per line. Optionally, override the path with the `BACKENDS_FILE` environment variable.
+
+### With Docker Compose:
+
+```bash
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
 ### With Docker:
 
 ```bash
