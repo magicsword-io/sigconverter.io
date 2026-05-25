@@ -379,12 +379,16 @@ function filterPipelineOptions() {
   tomSelect.clear();
   tomSelect.clearOptions();
 
-  // only add the pipeplines which match the selected backend or have backend=="all"
+  // Only add pipelines that explicitly allow the selected backend or allow all backends.
   let backend = getSelectValue("select-backend");
-  var options = select.querySelectorAll(
-    'option[target$="' + backend + '"], option[target=""]',
-  );
+  var options = select.querySelectorAll("option");
   options = [...options];
+  options = options.filter((option) => {
+    const targets = option.dataset.targets
+      ? option.dataset.targets.split(",").filter(Boolean)
+      : [];
+    return targets.length === 0 || targets.includes(backend);
+  });
   options.forEach((option) => {
     tomSelect.addOption({
       label: option.label,
@@ -543,7 +547,7 @@ async function updatePipelines(version) {
       const option = document.createElement("option");
       option.value = item.name;
       option.textContent = item.name;
-      option.setAttribute("target", item.targets);
+      option.dataset.targets = item.targets.join(",");
       select.appendChild(option);
 
       tomSelect.addOption({
