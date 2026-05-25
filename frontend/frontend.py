@@ -7,7 +7,9 @@ from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 sigma_versions = [
-    os.path.basename(it.path) for it in os.scandir("../backend/") if it.is_dir()
+    os.path.basename(it.path)
+    for it in os.scandir("../backend/")
+    if it.is_dir() and re.match(r"^\d+\.\d+\.\d+$", os.path.basename(it.path))
 ]
 
 

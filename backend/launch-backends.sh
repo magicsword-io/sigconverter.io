@@ -1,13 +1,15 @@
 #!/bin/bash
 
-# Specify the directory to search in (or use the current directory)
-directory="./"
+set -euo pipefail
 
-# Iterate over all subdirectories
-for dir in "$directory"/*/; do
-    if [ -d "$dir" ]; then
-        version=$(basename $dir)
-        echo "Launching sigconverter backend for sigma version: $version"
-        ./$version/.venv/bin/python ./backend.py &
-    fi
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
+mapfile -t SIGMA_VERSIONS < <(
+    find "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d -regextype posix-extended \
+        -regex '.*/[0-9]+\.[0-9]+\.[0-9]+' -printf '%f\n' | sort -V
+)
+
+for VERSION in "${SIGMA_VERSIONS[@]}"; do
+    echo "Launching sigconverter backend for sigma version: $VERSION"
+    "$SCRIPT_DIR/$VERSION/.venv/bin/python" "$SCRIPT_DIR/backend.py" &
 done

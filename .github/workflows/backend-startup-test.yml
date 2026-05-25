@@ -1,0 +1,99 @@
+name: Backend Startup Test
+
+on:
+  push:
+    paths:
+      - "backend/**"
+  pull_request:
+    paths:
+      - "backend/**"
+
+jobs:
+  discover-versions:
+    runs-on: ubuntu-latest
+    outputs:
+      sigma_versions: ${{ steps.collect.outputs.sigma_versions }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Collect sigma versions
+        id: collect
+        run: |
+          set -euo pipefail
+          sigma_versions=$(find backend -mindepth 1 -maxdepth 1 -type d -regextype posix-extended -regex '.*/[0-9]+\.[0-9]+\.[0-9]+' -printf '%f\n' | sort -V | python3 -c 'import json, sys; print(json.dumps([line.strip() for line in sys.stdin if line.strip()]))')
+          echo "sigma_versions=${sigma_versions}" >> "$GITHUB_OUTPUT"
+
+  backend-startup:
+    needs: discover-versions
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sigma_version: ${{ fromJson(needs.discover-versions.outputs.sigma_versions) }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+        with:
+          version: "latest"
+
+      - name: Install pinned backend environment
+        run: |
+          set -euo pipefail
+          version="${{ matrix.sigma_version }}"
+          version_dir="${GITHUB_WORKSPACE}/backend/${version}"
+          cd "${version_dir}"
+          uv venv
+          uv sync --frozen --no-dev
+          find ./.venv -iwholename "*sigma/conversion/base.py" -exec sed -i "/from pyparsing import Set/d" {} +
+          find ./.venv -iwholename "*sigma/exceptions.py" -exec sed -i "/from pyparsing import List/d" {} +
+
+      - name: Verify backend starts
+        run: |
+          set -euo pipefail
+          version="${{ matrix.sigma_version }}"
+          port="8${version//./}"
+          log_file="$(mktemp)"
+
+          echo "Starting backend for sigma-cli ${version} on port ${port}"
+          "${GITHUB_WORKSPACE}/backend/${version}/.venv/bin/python" "${GITHUB_WORKSPACE}/backend/backend.py" >"${log_file}" 2>&1 &
+          pid=$!
+          sleep 1
+
+          healthy=false
+          for _ in $(seq 1 20); do
+            if curl -fsS "http://127.0.0.1:${port}/api/v1/targets" >/dev/null 2>&1; then
+              healthy=true
+              break
+            fi
+
+            if ! kill -0 "${pid}" 2>/dev/null; then
+              break
+            fi
+
+            sleep 1
+          done
+
+          if [ "${healthy}" != "true" ]; then
+            echo "Backend startup failed for sigma-cli ${version}"
+            cat "${log_file}"
+            kill "${pid}" 2>/dev/null || true
+            wait "${pid}" 2>/dev/null || true
+            rm -f "${log_file}"
+            exit 1
+          fi
+
+          kill "${pid}"
+          wait "${pid}" 2>/dev/null || true
+          rm -f "${log_file}"
+          echo "OK ${version}"
