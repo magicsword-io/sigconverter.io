@@ -190,24 +190,6 @@ class Updater:
     def add_dependency(self, target_dir: Path, dependency: str) -> bool:
         return self.run_command(["uv", "add", "--quiet", "--no-sync", dependency], cwd=target_dir)
 
-    def patch_legacy_sigma_install(self, target_dir: Path) -> None:
-        replacements = {
-            "from pyparsing import Set\n": "",
-            "from pyparsing import List\n": "",
-        }
-        for path in (target_dir / ".venv").rglob("*.py"):
-            if path.name not in {"base.py", "exceptions.py"}:
-                continue
-            try:
-                content = path.read_text()
-            except UnicodeDecodeError:
-                continue
-            new_content = content
-            for old, new in replacements.items():
-                new_content = new_content.replace(old, new)
-            if new_content != content:
-                path.write_text(new_content)
-
     def candidate_locks(self, target_dir: Path) -> bool:
         if not self.run_command(["uv", "lock"], cwd=target_dir):
             return False
@@ -216,7 +198,6 @@ class Updater:
     def project_works(self, target_dir: Path) -> bool:
         if not self.run_command(["uv", "sync", "--frozen", "--no-dev"], cwd=target_dir):
             return False
-        self.patch_legacy_sigma_install(target_dir)
         return self.run_command(["uv", "run", "python", "-c", SMOKE_TEST], cwd=target_dir)
 
     def find_plugin_version(

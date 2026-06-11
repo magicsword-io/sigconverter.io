@@ -55,8 +55,6 @@ jobs:
           cd "${version_dir}"
           uv venv
           uv sync --frozen --no-dev
-          find ./.venv -iwholename "*sigma/conversion/base.py" -exec sed -i "/from pyparsing import Set/d" {} +
-          find ./.venv -iwholename "*sigma/exceptions.py" -exec sed -i "/from pyparsing import List/d" {} +
 
       - name: Verify backend starts
         run: |
