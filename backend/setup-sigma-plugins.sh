@@ -3,19 +3,15 @@
 set -euo pipefail
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+SIGMA_VERSIONS=$(python3 "$SCRIPT_DIR/list_sigma_versions.py")
 
-mapfile -t SIGMA_VERSIONS < <(
-    find "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d -regextype posix-extended \
-        -regex '.*/[0-9]+\.[0-9]+\.[0-9]+' -printf '%f\n' | sort -V
-)
-
-if [ ${#SIGMA_VERSIONS[@]} -eq 0 ]; then
+if [ -z "$SIGMA_VERSIONS" ]; then
     echo "No pinned sigma version directories found under $SCRIPT_DIR" >&2
     echo "Run python3 ./backend/update_sigma_plugins.py once to generate them before building." >&2
     exit 1
 fi
 
-for VERSION in "${SIGMA_VERSIONS[@]}"; do
+while IFS= read -r VERSION; do
     VERSION_DIR="$SCRIPT_DIR/$VERSION"
     echo "Installing pinned backend environment for sigma-cli version: $VERSION"
     (
@@ -23,4 +19,6 @@ for VERSION in "${SIGMA_VERSIONS[@]}"; do
         uv venv
         uv sync --frozen --no-dev
     )
-done
+done <<EOF
+$SIGMA_VERSIONS
+EOF

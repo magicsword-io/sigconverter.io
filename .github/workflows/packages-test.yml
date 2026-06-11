@@ -37,11 +37,11 @@ jobs:
         run: bash -n backend/setup-sigma-plugins.sh backend/launch-backends.sh
 
       - name: Check backend updater syntax
-        run: python -m py_compile backend/update_sigma_plugins.py
+        run: python -m py_compile backend/list_sigma_versions.py backend/update_sigma_plugins.py
 
       - name: Check pinned backend installation when version folders exist
         run: |
-          if find backend -mindepth 1 -maxdepth 1 -type d -regextype posix-extended -regex '.*/[0-9]+\.[0-9]+\.[0-9]+' | grep -q .; then
+          if python3 backend/list_sigma_versions.py --has-versions; then
             ./backend/setup-sigma-plugins.sh
           else
             echo "No pinned sigma version folders committed yet; skipping backend install test."

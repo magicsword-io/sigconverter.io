@@ -22,7 +22,7 @@ jobs:
         id: collect
         run: |
           set -euo pipefail
-          sigma_versions=$(find backend -mindepth 1 -maxdepth 1 -type d -regextype posix-extended -regex '.*/[0-9]+\.[0-9]+\.[0-9]+' -printf '%f\n' | sort -V | python3 -c 'import json, sys; print(json.dumps([line.strip() for line in sys.stdin if line.strip()]))')
+          sigma_versions=$(python3 backend/list_sigma_versions.py --json)
           echo "sigma_versions=${sigma_versions}" >> "$GITHUB_OUTPUT"
 
   backend-startup:

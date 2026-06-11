@@ -3,13 +3,16 @@
 set -euo pipefail
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+SIGMA_VERSIONS=$(python3 "$SCRIPT_DIR/list_sigma_versions.py")
 
-mapfile -t SIGMA_VERSIONS < <(
-    find "$SCRIPT_DIR" -mindepth 1 -maxdepth 1 -type d -regextype posix-extended \
-        -regex '.*/[0-9]+\.[0-9]+\.[0-9]+' -printf '%f\n' | sort -V
-)
+if [ -z "$SIGMA_VERSIONS" ]; then
+    echo "No pinned sigma version directories found under $SCRIPT_DIR" >&2
+    exit 1
+fi
 
-for VERSION in "${SIGMA_VERSIONS[@]}"; do
+while IFS= read -r VERSION; do
     echo "Launching sigconverter backend for sigma version: $VERSION"
     "$SCRIPT_DIR/$VERSION/.venv/bin/python" "$SCRIPT_DIR/backend.py" &
-done
+done <<EOF
+$SIGMA_VERSIONS
+EOF

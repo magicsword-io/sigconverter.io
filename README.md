@@ -16,7 +16,7 @@ Welcome to sigconverter.io, a user-friendly converter for Sigma rules. This proj
 
 Requirements:
 
-- `python`
+- `python3`
 - `uv` (https://docs.astral.sh/uv/getting-started/installation/)
 
 ```bash
