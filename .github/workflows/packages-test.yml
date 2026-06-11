@@ -34,7 +34,7 @@ jobs:
         working-directory: frontend
 
       - name: Check backend shell scripts
-        run: bash -n backend/setup-sigma-plugins.sh backend/launch-backends.sh
+        run: bash -n backend/setup-sigma-plugins.sh backend/launch-backends.sh backend/validate-backend-startup.sh
 
       - name: Check backend updater syntax
         run: python -m py_compile backend/list_sigma_versions.py backend/update_sigma_plugins.py

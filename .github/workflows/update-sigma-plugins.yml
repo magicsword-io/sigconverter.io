@@ -33,6 +33,12 @@ jobs:
       - name: Generate pinned sigma backend plugins
         run: python backend/update_sigma_plugins.py
 
+      - name: Install generated backend environments
+        run: ./backend/setup-sigma-plugins.sh
+
+      - name: Validate generated backend startup
+        run: ./backend/validate-backend-startup.sh
+
       - name: Create pull request
         uses: peter-evans/create-pull-request@v8
         with:
