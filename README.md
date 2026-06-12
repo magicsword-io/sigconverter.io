@@ -16,15 +16,21 @@ Welcome to sigconverter.io, a user-friendly converter for Sigma rules. This proj
 
 Requirements:
 
-- `python`
-- `curl`
-- `jq`
+- `python3`
 - `uv` (https://docs.astral.sh/uv/getting-started/installation/)
 
 ```bash
-cd backend && ./setup-sigma-versions.sh && cd ..
+cd backend && ./setup-sigma-plugins.sh && cd ..
 ./entrypoint.sh
 ```
+
+To intentionally refresh the tracked Sigma backend matrix, run:
+
+```bash
+python3 backend/update_sigma_plugins.py
+```
+
+That updater is designed to be run by GitHub Actions on a weekly cadence and commit the resulting version folders to the repository. Docker builds only install the pinned state already present in those folders.
 
 ### With Docker:
 

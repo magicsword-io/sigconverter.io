@@ -1,0 +1,60 @@
+name: Backend Startup Test
+
+on:
+  push:
+    paths:
+      - "backend/**"
+  pull_request:
+    paths:
+      - "backend/**"
+
+jobs:
+  discover-versions:
+    runs-on: ubuntu-latest
+    outputs:
+      sigma_versions: ${{ steps.collect.outputs.sigma_versions }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Collect sigma versions
+        id: collect
+        run: |
+          set -euo pipefail
+          sigma_versions=$(python3 backend/list_sigma_versions.py --json)
+          echo "sigma_versions=${sigma_versions}" >> "$GITHUB_OUTPUT"
+
+  backend-startup:
+    needs: discover-versions
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sigma_version: ${{ fromJson(needs.discover-versions.outputs.sigma_versions) }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+        with:
+          version: "0.11.19"
+
+      - name: Install pinned backend environment
+        run: |
+          set -euo pipefail
+          version="${{ matrix.sigma_version }}"
+          version_dir="${GITHUB_WORKSPACE}/backend/${version}"
+          cd "${version_dir}"
+          uv venv
+          uv sync --frozen --no-dev
+
+      - name: Verify backend starts
+        run: ./backend/validate-backend-startup.sh "${{ matrix.sigma_version }}"
