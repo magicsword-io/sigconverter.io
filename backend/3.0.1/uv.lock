@@ -616,6 +616,18 @@ wheels = [
 ]
 
 [[package]]
+name = "pysigma-backend-signals"
+version = "0.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pysigma" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7b/59/2364baf09c3b5cc64df089067cbdc5a1f627c3b1123e6a86ab441ff4ef56/pysigma_backend_signals-0.1.0.tar.gz", hash = "sha256:c6abcd46597b423fdb04587205ed7c02cea25f2b535f8bf59d496c2c65b70835", size = 7637, upload-time = "2026-05-14T13:22:04.129Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/3d/b9/fffb6fe0f769367a2567231bc1308515ba58df0732d0610911cb2537ca88/pysigma_backend_signals-0.1.0-py3-none-any.whl", hash = "sha256:dd305e353b45fa15fbf8939524c4163f102269920548705345d3b2aedad37bb4", size = 9458, upload-time = "2026-05-14T13:22:02.582Z" },
+]
+
+[[package]]
 name = "pysigma-backend-splunk"
 version = "2.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -637,6 +649,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/3e/c0/a75ea8d80d2f4615f3e65b55e5cd411a92ccfb9a68cdd4276fc6bc182010/pysigma_backend_sqlite-1.1.3.tar.gz", hash = "sha256:38d9e151664c49bc52ef150b851a261bec5fea22f6b7f8a3235356e3ab738e0a", size = 14940, upload-time = "2026-01-25T16:04:17.758Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/84/9b/b9d4e788bcdb01a04c53ab408185d7296eba6c9284cd1a2dd8721b6ad6e1/pysigma_backend_sqlite-1.1.3-py3-none-any.whl", hash = "sha256:9a3fb82b23ea6084ae19266c5133b9142b16a5666c771642afa37eade75194dc", size = 14184, upload-time = "2026-01-25T16:04:16.377Z" },
+]
+
+[[package]]
+name = "pysigma-backend-sumologic"
+version = "0.2.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "defusedxml" },
+    { name = "pysigma" },
+    { name = "pyyaml" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e1/d8/5d22a0979b8e854aeaa10db1104d41d7b7a08ea7f1ad69076a6f188783cb/pysigma_backend_sumologic-0.2.3.tar.gz", hash = "sha256:e428da78ddc5cd8ed00cd1ba4c337ee542b81bb50cb0b4f68095cda2ed811ca2", size = 68887, upload-time = "2026-05-29T21:31:40.568Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/33/d3/56030b13974110cfca0dc425acc35d90b99ed464e2635067a44638fc9ab3/pysigma_backend_sumologic-0.2.3-py3-none-any.whl", hash = "sha256:f04a6c16e4174310ed6e1d09628631e6039c5bffba46adb23d27924b950aae22", size = 72241, upload-time = "2026-05-29T21:31:38.906Z" },
 ]
 
 [[package]]
@@ -784,8 +810,10 @@ dependencies = [
     { name = "pysigma-backend-secops" },
     { name = "pysigma-backend-sentinelone" },
     { name = "pysigma-backend-sentinelone-pq" },
+    { name = "pysigma-backend-signals" },
     { name = "pysigma-backend-splunk" },
     { name = "pysigma-backend-sqlite" },
+    { name = "pysigma-backend-sumologic" },
     { name = "pysigma-pipeline-ocsf" },
     { name = "pysigma-pipeline-sysmon" },
     { name = "pysigma-pipeline-windows" },
@@ -811,8 +839,10 @@ requires-dist = [
     { name = "pysigma-backend-secops", specifier = "==1.0.0" },
     { name = "pysigma-backend-sentinelone", specifier = "==0.1.3" },
     { name = "pysigma-backend-sentinelone-pq", specifier = "==0.1.5" },
+    { name = "pysigma-backend-signals", specifier = "==0.1.0" },
     { name = "pysigma-backend-splunk", specifier = "==2.1.0" },
     { name = "pysigma-backend-sqlite", specifier = "==1.1.3" },
+    { name = "pysigma-backend-sumologic", specifier = "==0.2.3" },
     { name = "pysigma-pipeline-ocsf", specifier = "==0.1.2" },
     { name = "pysigma-pipeline-sysmon", specifier = "==2.0.0" },
     { name = "pysigma-pipeline-windows", specifier = "==2.0.0" },
