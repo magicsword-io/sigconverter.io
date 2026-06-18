@@ -16,10 +16,10 @@ jobs:
         with:
           submodules: true
 
-      - name: Set up Python 3.11
+      - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: 3.11
+          python-version: "3.14"
 
       - name: Install pinned uv
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
