@@ -30,5 +30,5 @@ dependencies = [
     "pysigma-pipeline-sysmon==2.0.0",
     "pysigma-pipeline-windows==2.0.0",
     "setuptools>=75.1.0",
-    "sigma-cli==2.0.1",
+    "sigma-cli==3.1.0",
 ]
