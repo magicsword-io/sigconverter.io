@@ -47,11 +47,11 @@ wheels = [
 
 [[package]]
 name = "certifi"
-version = "2026.6.17"
+version = "2026.7.22"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/c9/c7/424b75da314c1045981bd9777432fad05a9e0c69daa4ed7e308bbaffe405/certifi-2026.6.17.tar.gz", hash = "sha256:024c88eeec92ca068db80f02b8b07c9cef7b9fe261d1d535abfd5abd6f6af432", size = 134594, upload-time = "2026-06-17T10:31:07.894Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a3/c2/24167ea9858356b47a87a50d39908bfdb72ceeefe0041586e704e5376b3a/certifi-2026.7.22.tar.gz", hash = "sha256:741e2c3b351ddf169a738da9f2c048608ff7f2c5cc02f1ebc6b118bb090d5d55", size = 138112, upload-time = "2026-07-22T03:35:12.644Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ef/2f/c5464532e965badff2f4c4c1a3a83f5697f0d7c407ed0cda44aaa99bb451/certifi-2026.6.17-py3-none-any.whl", hash = "sha256:2227dcbaafe0d2f59279d1762ddddc37783ed4354594f194ffc31d20f41fc3db", size = 133289, upload-time = "2026-06-17T10:31:06.348Z" },
+    { url = "https://files.pythonhosted.org/packages/0b/a7/71ac2cff56fec219ed242bb11b8efb69fcc4bec75db06fb7bfe35de520e6/certifi-2026.7.22-py3-none-any.whl", hash = "sha256:62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775", size = 136983, upload-time = "2026-07-22T03:35:11.276Z" },
 ]
 
 [[package]]
@@ -416,11 +416,11 @@ wheels = [
 
 [[package]]
 name = "platformdirs"
-version = "4.10.0"
+version = "4.11.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/d7/47/e4501f49c178ae1d9f4a75073fda4204f52647993f075a9db4d14930e0c5/platformdirs-4.10.0.tar.gz", hash = "sha256:31e761a6a0ca04faf7353ea759bdba55652be214725111e5aac52dfa29d4bef7", size = 31224, upload-time = "2026-05-28T03:32:53.587Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/78/9b/560e4be8e26f6fd133a03630a8df0c663b9e8d61b4ade152b72005aec83b/platformdirs-4.11.0.tar.gz", hash = "sha256:0555d18370482847566ffabcaa53ad7c6c1c29f195989ae1ed634a05f76ea1e0", size = 31953, upload-time = "2026-07-21T13:09:36.565Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/81/e6/cd9575ac904136b3cbf7aa7ee819ef86eedb7274e46f230e94ea4342e729/platformdirs-4.10.0-py3-none-any.whl", hash = "sha256:fb516cdb12eb0d857d0cd85a7c57cea4d060bee4578d6cf5a14dfdf8cbf8784a", size = 22743, upload-time = "2026-05-28T03:32:52.175Z" },
+    { url = "https://files.pythonhosted.org/packages/7d/68/d8d58938dfb1370b266a1a729e6d77a985be23689a0496498ee17b2cbf90/platformdirs-4.11.0-py3-none-any.whl", hash = "sha256:360ccded2b7fce0af0ff80cc8f5942a1c5d99b0e856033acb030bfc634709e74", size = 23247, upload-time = "2026-07-21T13:09:35.422Z" },
 ]
 
 [[package]]
@@ -678,14 +678,14 @@ wheels = [
 
 [[package]]
 name = "pysigma-backend-sqlite"
-version = "1.2.0"
+version = "1.2.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pysigma" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b9/03/6c07fefcc32bcd44e41630677b44102657d7aef4a610599afbb650b00799/pysigma_backend_sqlite-1.2.0.tar.gz", hash = "sha256:19b0b14313721b82c1c7b54877331a52201b8ddbc79d5c5b7ef5afc84300aa99", size = 15784, upload-time = "2026-07-12T12:19:16.865Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/45/49/4589f6b9d87133bfdaab39a8b49ed05a84c07ea4946e8b1e7b8551c02476/pysigma_backend_sqlite-1.2.2.tar.gz", hash = "sha256:3970518045192d5aeb93f444221dce4661388e7b5b1aab289568930dacbfd247", size = 15854, upload-time = "2026-07-26T08:52:34.659Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6d/65/124643eab426e91feb8e931426c07fb4f1491d1d9fa0590a1775dde94164/pysigma_backend_sqlite-1.2.0-py3-none-any.whl", hash = "sha256:c7f0e1e768fccdec038396bf3c5a4f2bde73857761cd7fb0470fb72ceec1ea92", size = 14772, upload-time = "2026-07-12T12:19:15.795Z" },
+    { url = "https://files.pythonhosted.org/packages/9f/df/a13244cb211ea88f6214ab8598f3304c1942d02744a2cbf6b9708203e8af/pysigma_backend_sqlite-1.2.2-py3-none-any.whl", hash = "sha256:db553c8af13aa4290a5769f4e3754ecd8970a33254b8d00a65df48039cdc0e76", size = 14837, upload-time = "2026-07-26T08:52:33.501Z" },
 ]
 
 [[package]]
@@ -878,7 +878,7 @@ requires-dist = [
     { name = "pysigma-backend-sentinelone-pq", specifier = "==0.1.5" },
     { name = "pysigma-backend-signals", specifier = "==0.1.2" },
     { name = "pysigma-backend-splunk", specifier = "==2.1.0" },
-    { name = "pysigma-backend-sqlite", specifier = "==1.2.0" },
+    { name = "pysigma-backend-sqlite", specifier = "==1.2.2" },
     { name = "pysigma-backend-sumologic", specifier = "==0.2.3" },
     { name = "pysigma-pipeline-ocsf", specifier = "==0.1.2" },
     { name = "pysigma-pipeline-sysmon", specifier = "==2.0.0" },
@@ -958,11 +958,11 @@ wheels = [
 
 [[package]]
 name = "types-pyyaml"
-version = "6.0.12.20260518"
+version = "6.0.12.20260724"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/b8/83/4a1afc3fbfcf5b8d46fc390cd95ed6b0dc9010a265f4e9f46314efffa37a/types_pyyaml-6.0.12.20260518.tar.gz", hash = "sha256:d917f83fb38462550338c1297faedd860b3ec83912b96b1e3d73255f7473e466", size = 17850, upload-time = "2026-05-18T06:01:58.675Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/3f/6f/a28f44bcd56bebed42b028a2894c79853e2f5e6b5279e633cb3f287a05e7/types_pyyaml-6.0.12.20260724.tar.gz", hash = "sha256:3c1ce1bb73cd5ec02e90390c2b1f00e810d241d8825fd73ff359696839271b6b", size = 17893, upload-time = "2026-07-24T04:58:43.453Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/06/a2/c01db32be2ae7d6a1689972f3c492b149ee4e164b12fdfd9f64b50888215/types_pyyaml-6.0.12.20260518-py3-none-any.whl", hash = "sha256:d2150f75a231c9fe9c7463bd29487d93e60bac90400287351384bc2284eba7cd", size = 20312, upload-time = "2026-05-18T06:01:57.368Z" },
+    { url = "https://files.pythonhosted.org/packages/8b/42/0337fefc615e20ee55d1c8f71b774a9b2b734a04669139c20753b27a2a3a/types_pyyaml-6.0.12.20260724-py3-none-any.whl", hash = "sha256:d57db930a4b2efbc57cf430ec8882765d246929432fa253092f383902329a453", size = 20312, upload-time = "2026-07-24T04:58:42.486Z" },
 ]
 
 [[package]]
