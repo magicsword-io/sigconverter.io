@@ -12,6 +12,9 @@ COPY . /app
 # install backend
 RUN cd backend && ./setup-sigma-versions.sh
 
+# install frontend dependencies
+RUN cd frontend && uv sync
+
 # launch front- and backend
 EXPOSE 8000
 ENTRYPOINT ["./entrypoint.sh"]
