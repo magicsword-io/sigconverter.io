@@ -13,7 +13,7 @@ dependencies = [
     "pysigma-backend-elasticsearch==2.1.0",
     "pysigma-backend-golangexpr==1.0.0",
     "pysigma-backend-kusto==1.0.1",
-    "pysigma-backend-logpoint==1.0.1",
+    "pysigma-backend-logpoint==1.0.2",
     "pysigma-backend-loki==0.13.0",
     "pysigma-backend-netwitness==0.3.0",
     "pysigma-backend-opensearch==2.0.3",
