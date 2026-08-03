@@ -446,7 +446,7 @@ wheels = [
 
 [[package]]
 name = "pysigma"
-version = "1.4.0"
+version = "1.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "diskcache" },
@@ -460,9 +460,9 @@ dependencies = [
     { name = "types-pyyaml" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/92/e6/1b200cea322b987cc1e7150acec33158c51fedc60bc2ad5363e3e96d3f51/pysigma-1.4.0.tar.gz", hash = "sha256:0a9cc76f76470e8097543b653aecf91e59f7de1199c67e36fc57f2831b35eed7", size = 138090, upload-time = "2026-06-27T22:59:32.962Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/4d/2d/7bfbdb96d84ac30309e090bdb2cdb30245b69ec5a2ab349ee34d2495d74d/pysigma-1.5.0.tar.gz", hash = "sha256:2c258cf676d2896c94279fb54c7eea664118cf08285bde122b4df75cc7b6b194", size = 139976, upload-time = "2026-07-31T21:50:22.722Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e5/6b/15f51ff44a3e2e60c0ed04fcfa5c209278182d87276f0ef914ed66147e38/pysigma-1.4.0-py3-none-any.whl", hash = "sha256:e04db8cce4f0fd7dc8a3a64bc6d3ecaa49b7939d55ee42b12c7152d143eced47", size = 167270, upload-time = "2026-06-27T22:59:31.534Z" },
+    { url = "https://files.pythonhosted.org/packages/09/bb/a1e169539d8d4218fea68a1a3bd7b9cb7898cb606851cdb75c29f2079fb5/pysigma-1.5.0-py3-none-any.whl", hash = "sha256:871452a262aedb17d9e85344142944c5a0ac50e8b57408ec355efeb1329231b6", size = 169192, upload-time = "2026-07-31T21:50:21.145Z" },
 ]
 
 [[package]]
@@ -542,14 +542,14 @@ wheels = [
 
 [[package]]
 name = "pysigma-backend-logpoint"
-version = "1.0.1"
+version = "1.0.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pysigma" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/df/aa/b1f9ff72c11217d66f6ae0f4412fe3ae9c9ab7411a943c9e6814ddb2bc1b/pysigma_backend_logpoint-1.0.1.tar.gz", hash = "sha256:0ddf48af3f2d92af8033e11759e46ebb77ba1d307b899669b138596d91faa571", size = 31689, upload-time = "2026-03-06T08:37:16.124Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/01/ca/b1b7a96f533340ecf234f8d592810b1d9bf16b793c0636ddbec904b2ac5f/pysigma_backend_logpoint-1.0.2.tar.gz", hash = "sha256:60fc8c2046316496f916fc47f0994cc9c5421e374e4ce31ba8666ef8312f45b3", size = 32664, upload-time = "2026-07-27T05:44:18.73Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f2/71/13d760a5ee4a78661861aaa488cadf966e1d74e8839d50d168a1b2c7b94a/pysigma_backend_logpoint-1.0.1-py3-none-any.whl", hash = "sha256:2fa129f7ab059cdb91d47c3f8b997bea813417eb5e7f8f624f2fa0755827490c", size = 33135, upload-time = "2026-03-06T08:37:15.28Z" },
+    { url = "https://files.pythonhosted.org/packages/eb/42/455f3495119591f9b55aeca3d62f512d306767c6e948e6cf13a2a87f13a9/pysigma_backend_logpoint-1.0.2-py3-none-any.whl", hash = "sha256:8468fdc5f1b67a7347ba458ff052543ff5c69c254fe670db7a23ed32a294b153", size = 34537, upload-time = "2026-07-27T05:44:17.804Z" },
 ]
 
 [[package]]
@@ -867,7 +867,7 @@ requires-dist = [
     { name = "pysigma-backend-elasticsearch", specifier = "==2.1.0" },
     { name = "pysigma-backend-golangexpr", specifier = "==1.0.0" },
     { name = "pysigma-backend-kusto", specifier = "==1.0.1" },
-    { name = "pysigma-backend-logpoint", specifier = "==1.0.1" },
+    { name = "pysigma-backend-logpoint", specifier = "==1.0.2" },
     { name = "pysigma-backend-loki", specifier = "==0.13.0" },
     { name = "pysigma-backend-netwitness", specifier = "==0.3.0" },
     { name = "pysigma-backend-opensearch", specifier = "==2.0.3" },
