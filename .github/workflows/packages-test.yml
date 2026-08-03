@@ -1,7 +1,4 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
-
-name: Frontend Packages Test
+name: Dependency Setup Checks
 
 on: # yamllint disable-line rule:truthy
   push:
@@ -12,23 +9,40 @@ on: # yamllint disable-line rule:truthy
       - main
 
 jobs:
-  pip-package:
+  dependency-setup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v6
         with:
           submodules: true
 
       - name: Set up Python 3.11
-        uses: actions/setup-python@v4.5.0
+        uses: actions/setup-python@v6
         with:
           python-version: 3.11
 
-      - name: Install the latest version of uv
-        uses: astral-sh/setup-uv@v3
+      - name: Install pinned uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
         with:
-          version: "latest"
+          version: "0.11.19"
 
-      - name: Test uv package installation
+      - name: Install updater dependencies
+        run: python -m pip install packaging
+
+      - name: Check frontend dependency installation
         run: uv venv && uv pip sync pyproject.toml
         working-directory: frontend
+
+      - name: Check backend shell scripts
+        run: bash -n backend/setup-sigma-plugins.sh backend/launch-backends.sh backend/validate-backend-startup.sh
+
+      - name: Check backend updater syntax
+        run: python -m py_compile backend/list_sigma_versions.py backend/update_sigma_plugins.py
+
+      - name: Check pinned backend installation when version folders exist
+        run: |
+          if python3 backend/list_sigma_versions.py --has-versions; then
+            ./backend/setup-sigma-plugins.sh
+          else
+            echo "No pinned sigma version folders committed yet; skipping backend install test."
+          fi

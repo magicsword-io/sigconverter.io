@@ -1,16 +1,13 @@
 FROM python:3.11.4-slim-bookworm
 
-# install dependencies
-RUN apt-get update 
-RUN apt-get install -y git curl jq
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
+COPY --from=ghcr.io/astral-sh/uv:0.11.19 /uv /bin/uv
 
 # define work directory
 WORKDIR /app/
 COPY . /app
 
-# install backend
-RUN cd backend && ./setup-sigma-versions.sh
+# install pinned backend environments committed to the repository
+RUN cd backend && ./setup-sigma-plugins.sh
 
 # launch front- and backend
 EXPOSE 8000
