@@ -398,11 +398,11 @@ wheels = [
 
 [[package]]
 name = "packaging"
-version = "26.2"
+version = "26.3"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/d7/f1/e7a6dd94a8d4a5626c03e4e99c87f241ba9e350cd9e6d75123f992427270/packaging-26.2.tar.gz", hash = "sha256:ff452ff5a3e828ce110190feff1178bb1f2ea2281fa2075aadb987c2fb221661", size = 228134, upload-time = "2026-04-24T20:15:23.917Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7d/fa/3944b40b07da9ce895c0e6303a5ab7d53da063554f534556b134a54d6093/packaging-26.3.tar.gz", hash = "sha256:94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79", size = 313412, upload-time = "2026-08-04T18:15:28.737Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/df/b2/87e62e8c3e2f4b32e5fe99e0b86d576da1312593b39f47d8ceef365e95ed/packaging-26.2-py3-none-any.whl", hash = "sha256:5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e", size = 100195, upload-time = "2026-04-24T20:15:22.081Z" },
+    { url = "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl", hash = "sha256:d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c", size = 129956, upload-time = "2026-08-04T18:15:27.159Z" },
 ]
 
 [[package]]
@@ -416,11 +416,11 @@ wheels = [
 
 [[package]]
 name = "platformdirs"
-version = "4.11.0"
+version = "4.11.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/78/9b/560e4be8e26f6fd133a03630a8df0c663b9e8d61b4ade152b72005aec83b/platformdirs-4.11.0.tar.gz", hash = "sha256:0555d18370482847566ffabcaa53ad7c6c1c29f195989ae1ed634a05f76ea1e0", size = 31953, upload-time = "2026-07-21T13:09:36.565Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/36/0a/062135c9a98dac804265073cc3afdbec5ae1aa37980bb354f461bafe81b4/platformdirs-4.11.1.tar.gz", hash = "sha256:bb1af68078f25e2f3e111e2d43b8d536df41b73c8a684b40bb018223b66fae27", size = 32396, upload-time = "2026-08-07T23:06:48.516Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7d/68/d8d58938dfb1370b266a1a729e6d77a985be23689a0496498ee17b2cbf90/platformdirs-4.11.0-py3-none-any.whl", hash = "sha256:360ccded2b7fce0af0ff80cc8f5942a1c5d99b0e856033acb030bfc634709e74", size = 23247, upload-time = "2026-07-21T13:09:35.422Z" },
+    { url = "https://files.pythonhosted.org/packages/4c/85/9b31b44296cfa3bb56cddb35e6a0f6578bab0b490c0806c0245e32c6110c/platformdirs-4.11.1-py3-none-any.whl", hash = "sha256:2efd27d363e8dd2e661639ffb398865a5e0a46442a11d266bf375a0e0c10e386", size = 23261, upload-time = "2026-08-07T23:06:47.219Z" },
 ]
 
 [[package]]
@@ -678,14 +678,14 @@ wheels = [
 
 [[package]]
 name = "pysigma-backend-sqlite"
-version = "1.2.2"
+version = "1.2.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pysigma" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/45/49/4589f6b9d87133bfdaab39a8b49ed05a84c07ea4946e8b1e7b8551c02476/pysigma_backend_sqlite-1.2.2.tar.gz", hash = "sha256:3970518045192d5aeb93f444221dce4661388e7b5b1aab289568930dacbfd247", size = 15854, upload-time = "2026-07-26T08:52:34.659Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d6/63/475bd7c0ea1bb45408e934394f2873328923ef6aca391e7233b5295121c4/pysigma_backend_sqlite-1.2.4.tar.gz", hash = "sha256:c83411be2cbddeb9d8aea4e429535c7687ac6c0f45c1b7ddcf182d6e8e643474", size = 16023, upload-time = "2026-08-03T07:17:02.521Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9f/df/a13244cb211ea88f6214ab8598f3304c1942d02744a2cbf6b9708203e8af/pysigma_backend_sqlite-1.2.2-py3-none-any.whl", hash = "sha256:db553c8af13aa4290a5769f4e3754ecd8970a33254b8d00a65df48039cdc0e76", size = 14837, upload-time = "2026-07-26T08:52:33.501Z" },
+    { url = "https://files.pythonhosted.org/packages/e6/f2/c3f3f3cedec16c8a6850b85d709e5c9e6c631b0adc2d68b215614c1da066/pysigma_backend_sqlite-1.2.4-py3-none-any.whl", hash = "sha256:30fcebe9c114872725bced20c7aaa2deffd9e43c29e893c4176d6dd5c348d61a", size = 14995, upload-time = "2026-08-03T07:17:01.343Z" },
 ]
 
 [[package]]
@@ -819,11 +819,11 @@ wheels = [
 
 [[package]]
 name = "setuptools"
-version = "83.0.0"
+version = "84.0.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/34/26/f5d29e25ffdb535afef2d35cdb55b325298f96debd670da4c325e08d70f4/setuptools-83.0.0.tar.gz", hash = "sha256:025bccbbf0fa05b6192bc64ae1e7b16e001fd6d6d4d5de03c97b1c1ade523bef", size = 1154254, upload-time = "2026-07-04T15:31:22.699Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/6d/44/f5da03a8ef95d369145c5bb53050e7877c9f3d312e128605fd9504829143/setuptools-84.0.0.tar.gz", hash = "sha256:f4695c21257f0d9b537ec2692c941d02ee143b7cc1276941349a546573b2ef73", size = 1168449, upload-time = "2026-08-08T18:27:58.365Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/5d/40/e1e72872c6354b306daef1703549e8e83b4d43cfea356311bf722a043752/setuptools-83.0.0-py3-none-any.whl", hash = "sha256:29b23c360f22f414dc7336bb39178cc7bcbf6021ed2733cde173f09dba19abb3", size = 1008090, upload-time = "2026-07-04T15:31:20.885Z" },
+    { url = "https://files.pythonhosted.org/packages/95/9c/c510029fc6ef33a6275cd2c5d3cecd6613dfd6aa401d57c54f1c18852ccf/setuptools-84.0.0-py3-none-any.whl", hash = "sha256:51a52592b3b99e102b609654876bd65f19f999935166d1352678931132b0c670", size = 818216, upload-time = "2026-08-08T18:27:56.719Z" },
 ]
 
 [[package]]
@@ -878,7 +878,7 @@ requires-dist = [
     { name = "pysigma-backend-sentinelone-pq", specifier = "==0.1.5" },
     { name = "pysigma-backend-signals", specifier = "==0.1.2" },
     { name = "pysigma-backend-splunk", specifier = "==2.1.0" },
-    { name = "pysigma-backend-sqlite", specifier = "==1.2.2" },
+    { name = "pysigma-backend-sqlite", specifier = "==1.2.4" },
     { name = "pysigma-backend-sumologic", specifier = "==0.2.3" },
     { name = "pysigma-pipeline-ocsf", specifier = "==0.1.2" },
     { name = "pysigma-pipeline-sysmon", specifier = "==2.0.0" },
