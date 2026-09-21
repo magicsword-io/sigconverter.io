@@ -18,6 +18,7 @@ dependencies = [
     "pysigma-backend-netwitness==0.3.0",
     "pysigma-backend-opensearch==2.0.3",
     "pysigma-backend-panther==0.3.1",
+    "pysigma-backend-parseable==0.1.0",
     "pysigma-backend-quickwit==0.1.4",
     "pysigma-backend-secops==1.0.0",
     "pysigma-backend-sentinelone==0.1.3",
