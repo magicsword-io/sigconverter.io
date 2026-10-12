@@ -7,7 +7,7 @@ requires-python = ">=3.10"
 authors = [{ name = "Magic Sword", email = "info@magicsword.io" }]
 dependencies = [
     "flask>=3.0.3",
-    "pysigma-backend-carbonblack==0.1.12",
+    "pysigma-backend-carbonblack==0.1.13",
     "pysigma-backend-cortexxdr==0.1.5",
     "pysigma-backend-crowdstrike==2.0.1",
     "pysigma-backend-datadog==0.3.1",
