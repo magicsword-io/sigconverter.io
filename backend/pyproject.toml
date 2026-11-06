@@ -3,7 +3,7 @@ name = "sigconverter-backend"
 version = "1.0.0"
 description = "backend for the sigconverter projects"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 authors = [{ name = "Magic Sword", email = "info@magicsword.io" }]
 dependencies = [
     "flask>=3.0.3",

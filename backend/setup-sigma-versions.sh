@@ -33,13 +33,30 @@ for VERSION in $SIGMA_VERSIONS; do
     cd $VERSION
     uv venv && uv -q pip sync pyproject.toml
 
-    uv -q add sigma-cli==$VERSION
+    # skip versions that cannot be installed (e.g. unsupported python version)
+    if ! uv -q add sigma-cli==$VERSION; then
+        echo "WARNING: could not install sigma-cli $VERSION, skipping this version"
+        cd .. && rm -rf $VERSION
+        continue
+    fi
 
     if [ "${#SELECTED_BACKENDS[@]}" -gt 0 ]; then
-        # install only the user-selected backends
+        # install only the user-selected backends, skipping incompatible ones
+        INSTALLED=0
         for pkg in "${SELECTED_BACKENDS[@]}"; do
-            uv -q add "$pkg"
+            if uv -q add "$pkg"; then
+                INSTALLED=$((INSTALLED + 1))
+            else
+                echo "WARNING: $pkg is not compatible with sigma-cli $VERSION, skipping it"
+            fi
         done
+
+        # a version without any backend is useless, drop it
+        if [ "$INSTALLED" -eq 0 ]; then
+            echo "WARNING: no selected backend is compatible with sigma-cli $VERSION, skipping this version"
+            cd .. && rm -rf $VERSION
+            continue
+        fi
     else
         # fetch all plugins from plugin directory json and install latest compatible plugins available
         curl https://raw.githubusercontent.com/SigmaHQ/pySigma-plugin-directory/refs/heads/main/pySigma-plugins-v1.json | jq '.plugins[].package' | xargs -n 1 uv add -q
